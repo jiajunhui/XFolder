@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">XFolder</string>
+
+    <string name="permission_fail_tips">未授予存储权限，应用将无法正常工作。</string>
+    <string name="folder_info">%1$d个文件夹 , %2$d个文件</string>
+
+</resources>

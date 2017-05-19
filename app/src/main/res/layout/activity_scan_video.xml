@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/scan_video_colorPrimary">
+
+    <RelativeLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="#000000">
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_info"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="200dp">
+        <ak.sh.ay.musicwave.MusicWave
+            android:id="@+id/musicWave"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:colorGradient="true"
+            app:endColor="#815959"
+            app:startColor="#f9f903"
+            app:waveThickness="3" />
+        <TextView
+            android:id="@+id/tv_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="5dp"
+            android:textSize="14sp"
+            android:textColor="#cccccc"
+            android:padding="10dp"
+            android:background="#00000000"/>
+    </RelativeLayout>
+
+</RelativeLayout>
