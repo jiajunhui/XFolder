@@ -5,6 +5,9 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jiajunhui.xapp.medialoader.bean.AudioItem;
+import com.jiajunhui.xapp.medialoader.bean.PhotoItem;
+import com.jiajunhui.xapp.medialoader.bean.VideoItem;
 import com.kk.taurus.baseframe.base.ContentHolder;
 import com.kk.taurus.filebase.entity.Storage;
 import com.kk.taurus.xfolder.R;
@@ -96,13 +99,19 @@ public class MainHolder extends ContentHolder<MainHolderData> {
         super.onClick(v);
         switch (v.getId()){
             case R.id.ll_image:
-
+                if(mOnMainListener!=null){
+                    mOnMainListener.intentToPhotoList(mData.getMediaEntity().getPhotoItems());
+                }
                 break;
             case R.id.ll_video:
-
+                if(mOnMainListener!=null){
+                    mOnMainListener.intentToVideoList(mData.getMediaEntity().getVideoItems());
+                }
                 break;
             case R.id.ll_music:
-
+                if(mOnMainListener!=null){
+                    mOnMainListener.intentToAudioList(mData.getMediaEntity().getAudioItems());
+                }
                 break;
         }
     }
@@ -113,5 +122,8 @@ public class MainHolder extends ContentHolder<MainHolderData> {
 
     public interface OnMainListener{
         void intentToExplorer(Storage storage);
+        void intentToVideoList(List<VideoItem> videoItems);
+        void intentToAudioList(List<AudioItem> audioItems);
+        void intentToPhotoList(List<PhotoItem> photoItems);
     }
 }
