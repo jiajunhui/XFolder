@@ -34,7 +34,7 @@ public class MainActivity extends ToolBarActivity<MainHolderData,MainHolder> imp
     public void initData() {
         super.initData();
         setNavigationIcon(null);
-        setCenterTitle("XFolder");
+        setToolBarTitle("XFolder");
         mContentHolder.setOnMainListener(this);
     }
 
