@@ -18,7 +18,8 @@
         android:id="@+id/rl_info"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="200dp">
+        android:layout_below="@id/container"
+        >
         <ak.sh.ay.musicwave.MusicWave
             android:id="@+id/musicWave"
             android:layout_width="match_parent"

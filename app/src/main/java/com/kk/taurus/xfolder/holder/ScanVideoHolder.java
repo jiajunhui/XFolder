@@ -35,7 +35,6 @@ public class ScanVideoHolder extends ContentHolder<ScanVideoData> implements OnP
 
     private RelativeLayout mContainer;
     private MusicWave mWave;
-    private RelativeLayout mInfoContainer;
     private TextView mTvInfo;
     private Visualizer mVisualizer;
     private BasePlayer mPlayer;
@@ -55,7 +54,6 @@ public class ScanVideoHolder extends ContentHolder<ScanVideoData> implements OnP
     public void onCreate() {
         setContentView(R.layout.activity_scan_video);
         mContainer = getViewById(R.id.container);
-        mInfoContainer = getViewById(R.id.rl_info);
         mWave = getViewById(R.id.musicWave);
         mTvInfo = getViewById(R.id.tv_info);
     }
@@ -82,9 +80,6 @@ public class ScanVideoHolder extends ContentHolder<ScanVideoData> implements OnP
         ViewGroup.LayoutParams params = mContainer.getLayoutParams();
         params.height = h;
         mContainer.setLayoutParams(params);
-        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) mInfoContainer.getLayoutParams();
-        lp.topMargin = h;
-        mInfoContainer.setLayoutParams(lp);
         mHeight = h;
     }
 

@@ -2,13 +2,16 @@ package com.kk.taurus.xfolder.ui.activity;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.FileProvider;
 import android.view.Menu;
 
 import com.kk.taurus.baseframe.bean.PageState;
 import com.kk.taurus.baseframe.ui.activity.ToolBarActivity;
 import com.kk.taurus.filebase.entity.Storage;
 import com.kk.taurus.threadpool.TaskCallBack;
+import com.kk.taurus.xfolder.BuildConfig;
 import com.kk.taurus.xfolder.R;
 import com.kk.taurus.xfolder.bean.BaseItem;
 import com.kk.taurus.xfolder.bean.FileItem;
@@ -67,11 +70,18 @@ public class ExplorerActivity extends ToolBarActivity<StackEntity,ExplorerHolder
         openFolder(item);
     }
 
-    private void openFolder(FolderItem item){
+    @Override
+    public void setData(StackEntity data) {
+        super.setData(data);
+        setToolBarTitle(data.getName());
+    }
+
+    private void openFolder(final FolderItem item){
         new TaskCallBack<FolderItem,Void,StackEntity>(){
             @Override
             public void onPreExecute() {
                 super.onPreExecute();
+                setToolBarTitle(item.getName());
                 setPageState(PageState.loading());
             }
             @Override
@@ -88,12 +98,6 @@ public class ExplorerActivity extends ToolBarActivity<StackEntity,ExplorerHolder
     }
 
     @Override
-    public void setData(StackEntity data) {
-        super.setData(data);
-        setToolBarTitle(data.getName());
-    }
-
-    @Override
     public void onItemClick(List<BaseItem> items, BaseItem item, StateRecord record, int position) {
         if(item instanceof FolderItem){
             StackManager.getInstance().peek(false).setStateRecord(record);
@@ -106,17 +110,29 @@ public class ExplorerActivity extends ToolBarActivity<StackEntity,ExplorerHolder
             }else{
                 try{
                     File file = new File(item.getPath());
-                    Intent intent = new Intent("android.intent.action.VIEW");
-                    intent.addCategory("android.intent.category.DEFAULT");
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    Uri uri = Uri.fromFile(file);
-                    intent.setDataAndType(uri, MIMEUtils.getMIMEType(ExtensionUtils.getExtension(item.getName())));
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        Uri contentUri = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".fileProvider", file);
+                        intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
+                    }else{
+                        intent.addCategory(Intent.CATEGORY_DEFAULT);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        Uri uri = Uri.fromFile(file);
+                        intent.setDataAndType(uri, MIMEUtils.getMIMEType(ExtensionUtils.getExtension(item.getName())));
+                    }
                     startActivity(intent);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
             }
         }
+    }
+
+    @Override
+    protected void onToolBarDoubleClick() {
+        super.onToolBarDoubleClick();
+        mContentHolder.smoothScrollToPosition(0);
     }
 
     @Override

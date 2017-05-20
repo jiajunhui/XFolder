@@ -89,6 +89,10 @@ public class ExplorerHolder extends ContentHolder<StackEntity> implements Explor
         layoutManager.scrollToPositionWithOffset(position, offset);
     }
 
+    public void smoothScrollToPosition(int position){
+        mRecycler.smoothScrollToPosition(position);
+    }
+
     public void setStorage(Storage storage){
         this.storage = storage;
     }

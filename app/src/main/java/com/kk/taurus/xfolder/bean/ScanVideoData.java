@@ -9,6 +9,7 @@ import java.io.Serializable;
  */
 
 public class ScanVideoData implements Serializable ,HolderData {
+
     private FileItem item;
 
     public FileItem getItem() {

@@ -13,6 +13,7 @@ import com.kk.taurus.xfolder.R;
 import com.kk.taurus.xfolder.bean.BaseItem;
 import com.kk.taurus.xfolder.bean.FileItem;
 import com.kk.taurus.xfolder.bean.FolderItem;
+import com.kk.taurus.xfolder.engine.ImageDisplayEngine;
 import com.kk.taurus.xfolder.utils.ExtensionUtils;
 
 import java.util.ArrayList;
@@ -48,12 +49,7 @@ public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.ItemHo
         holder.name.setText(item.getName());
         int resId = ExtensionUtils.getImageRes(item);
         if(resId == R.mipmap.icon_image){
-            Glide.with(mContext)
-                    .load(item.getPath())
-                    .centerCrop()
-                    .placeholder(resId)
-                    .crossFade()
-                    .into(holder.icon);
+            ImageDisplayEngine.display(mContext,holder.icon,item.getPath(),R.mipmap.icon_image);
         }else{
             holder.icon.setImageResource(resId);
         }

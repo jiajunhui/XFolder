@@ -35,7 +35,7 @@ public class ExtensionUtils {
     }
 
     public static String getExtension(String name){
-        int i = name.indexOf('.');
+        int i = name.lastIndexOf('.');
         if (i != -1) {
             name = name.substring(i);
         }

@@ -6,4 +6,8 @@
 
     <color name="scan_video_colorPrimary">#352e2e</color>
     <color name="scan_video_colorPrimaryDark">#352e2e</color>
+
+    <color name="folder_item_image_border_color1">#7aed9d</color>
+    <color name="folder_item_image_border_color2">#d93291</color>
+    <color name="folder_item_image_border_color3">#283183</color>
 </resources>
