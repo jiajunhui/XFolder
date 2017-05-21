@@ -10,9 +10,15 @@
     <color name="scan_image_colorPrimary">#7039d4</color>
     <color name="scan_image_colorPrimaryDark">#7039d4</color>
 
+    <color name="scan_audio_colorPrimary">#9e1e4b</color>
+    <color name="scan_audio_colorPrimaryDark">#9e1e4b</color>
+
     <color name="folder_item_image_border_color1">#7aed9d</color>
     <color name="folder_item_image_border_color2">#d93291</color>
     <color name="folder_item_image_border_color3">#283183</color>
+    <color name="folder_item_image_border_color4">#6ac92f</color>
+    <color name="folder_item_image_border_color5">#363848</color>
+    <color name="folder_item_image_border_color6">#8b4021</color>
 
 
     <color name="photo_tab_select_color">#eedef7</color>

@@ -47,7 +47,7 @@ public class VideoListActivity extends ToolBarActivity<VideoListData,VideoListHo
                 data.setVideoItems(videoItems);
                 setData(data);
                 setPageState(PageState.success());
-                thumbnailCache.generatorThumbnail(videoItems, new ThumbnailCache.OnThumbnailListener() {
+                thumbnailCache.generatorThumbnail(videoItems, new ThumbnailCache.OnVideoThumbnailListener() {
                     @Override
                     public void onThumbnailFinish() {
                         mContentHolder.notifyDataChange();

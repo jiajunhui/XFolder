@@ -1,7 +1,6 @@
 package com.kk.taurus.xfolder.holder;
 
 import android.content.Context;
-import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.media.audiofx.Visualizer;
 import android.os.Bundle;

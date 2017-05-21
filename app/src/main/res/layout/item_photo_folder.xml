@@ -1,74 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    app:cardUseCompatPadding="true"
+    app:cardCornerRadius="10dp"
+    app:contentPadding="0dp"
+    app:cardElevation="5dp"
+    app:cardMaxElevation="5dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
-        android:orientation="horizontal"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:gravity="center_vertical"
-        android:padding="10dp">
-
-        <TextView
-            android:id="@+id/tv_folder_info"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:maxLines="1"
-            android:layout_marginLeft="10dp"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:textColor="#444444"
-            android:text=""
-            />
+            android:gravity="center_vertical"
+            android:padding="10dp">
 
-        <RelativeLayout
-            android:layout_width="140dp"
-            android:layout_height="match_parent">
-            <com.github.siyamed.shapeimageview.CircularImageView
-                android:id="@+id/iv_cover3"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                app:siBorderWidth="2dp"
-                app:siBorderColor="@color/folder_item_image_border_color3"
-                android:layout_centerVertical="true"/>
-
-            <com.github.siyamed.shapeimageview.CircularImageView
-                android:id="@+id/iv_cover2"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                app:siBorderWidth="2dp"
-                app:siBorderColor="@color/folder_item_image_border_color2"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="40dp"/>
-
-            <com.github.siyamed.shapeimageview.CircularImageView
-                android:id="@+id/iv_cover1"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                app:siBorderWidth="2dp"
-                app:siBorderColor="@color/folder_item_image_border_color1"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="80dp"/>
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="30dp"
-            android:layout_height="match_parent">
-            <ImageView
-                android:id="@+id/iv_arrow"
-                android:layout_width="12dp"
-                android:layout_height="match_parent"
-                android:layout_centerInParent="true"
-                android:scaleType="centerInside"
-                android:src="@mipmap/icon_arrow"
+            <TextView
+                android:id="@+id/tv_folder_info"
+                android:layout_width="wrap_content"
+                android:maxLines="1"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="#444444"
+                android:text=""
                 />
-        </RelativeLayout>
 
-    </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content">
+                    <com.github.siyamed.shapeimageview.CircularImageView
+                        android:id="@+id/iv_cover1"
+                        android:layout_width="@dimen/photo_folder_circle_icon_w"
+                        android:layout_height="@dimen/photo_folder_circle_icon_h"
+                        app:siBorderWidth="2dp"
+                        app:siBorderColor="@color/folder_item_image_border_color1"
+                        android:layout_centerVertical="true"/>
+
+                    <com.github.siyamed.shapeimageview.CircularImageView
+                        android:id="@+id/iv_cover2"
+                        android:layout_width="@dimen/photo_folder_circle_icon_w"
+                        android:layout_height="@dimen/photo_folder_circle_icon_h"
+                        app:siBorderWidth="2dp"
+                        app:siBorderColor="@color/folder_item_image_border_color2"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="40dp"/>
+
+                    <com.github.siyamed.shapeimageview.CircularImageView
+                        android:id="@+id/iv_cover3"
+                        android:layout_width="@dimen/photo_folder_circle_icon_w"
+                        android:layout_height="@dimen/photo_folder_circle_icon_h"
+                        app:siBorderWidth="2dp"
+                        app:siBorderColor="@color/folder_item_image_border_color3"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="80dp"/>
+
+                    <com.github.siyamed.shapeimageview.CircularImageView
+                        android:id="@+id/iv_cover4"
+                        android:layout_width="@dimen/photo_folder_circle_icon_w"
+                        android:layout_height="@dimen/photo_folder_circle_icon_h"
+                        app:siBorderWidth="2dp"
+                        app:siBorderColor="@color/folder_item_image_border_color4"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="120dp"/>
+
+                    <com.github.siyamed.shapeimageview.CircularImageView
+                        android:id="@+id/iv_cover5"
+                        android:layout_width="@dimen/photo_folder_circle_icon_w"
+                        android:layout_height="@dimen/photo_folder_circle_icon_h"
+                        app:siBorderWidth="2dp"
+                        app:siBorderColor="@color/folder_item_image_border_color5"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="160dp"/>
+
+                    <com.github.siyamed.shapeimageview.CircularImageView
+                        android:id="@+id/iv_cover6"
+                        android:layout_width="@dimen/photo_folder_circle_icon_w"
+                        android:layout_height="@dimen/photo_folder_circle_icon_h"
+                        app:siBorderWidth="2dp"
+                        app:siBorderColor="@color/folder_item_image_border_color6"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="200dp"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:id="@+id/iv_arrow"
+                        android:layout_width="12dp"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/icon_arrow"
+                        />
+                </RelativeLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
 
-
-</RelativeLayout>
+</android.support.v7.widget.CardView>

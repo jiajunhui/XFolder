@@ -23,6 +23,13 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.ScanAudio" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/scan_audio_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/scan_audio_colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
 
     <style name="TabLayoutTextStyle">
         <item name="android:textSize">13sp</item>

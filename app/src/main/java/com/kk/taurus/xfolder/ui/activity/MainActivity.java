@@ -81,7 +81,7 @@ public class MainActivity extends ToolBarActivity<MainHolderData,MainHolder> imp
 
     @Override
     public void intentToAudioList(List<AudioItem> audioItems) {
-        intentTo(MusicListActivity.class);
+        intentTo(AudioListActivity.class);
     }
 
     @Override

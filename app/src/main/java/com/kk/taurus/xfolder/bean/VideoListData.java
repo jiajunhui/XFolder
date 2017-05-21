@@ -31,7 +31,7 @@ public class VideoListData implements HolderData,Serializable {
         MVideoItem mVideoItem;
         for(VideoItem item : videoItems){
             mVideoItem = new MVideoItem(item.getId(),item.getDisplayName(),item.getPath(),item.getDuration(),item.getSize());
-            String cachePath = thumbnailCache.getThumbnail(item.getPath());
+            String cachePath = thumbnailCache.getVideoThumbnailCachePath(item.getPath());
             if(!TextUtils.isEmpty(cachePath)){
                 mVideoItem.setThumbnail(cachePath);
             }

@@ -9,7 +9,9 @@ import com.kk.taurus.filebase.base.FileBase;
 import com.kk.taurus.filebase.base.IFileBase;
 import com.kk.taurus.filebase.tools.MD5Utils;
 import com.kk.taurus.threadpool.TaskCallBack;
+import com.kk.taurus.xfolder.bean.MAudioItem;
 import com.kk.taurus.xfolder.bean.MVideoItem;
+import com.kk.taurus.xfolder.utils.AudioCoverUtils;
 import com.kk.taurus.xfolder.utils.VideoThumbnailUtil;
 
 import java.io.File;
@@ -21,15 +23,20 @@ import java.util.List;
 
 public class ThumbnailCache extends FileBase {
 
-    private final String ROOT_DIR_NAME = ".video_thumbnail_cache";
-    private final String THUMBNAIL_KIND_MINI = "kind_mini";
+    private final String ROOT_DIR_NAME = ".bitmap_cache";
+    private final String VIDEO_THUMBNAIL_KIND_MINI = "video_thumbnail_kind_mini";
+    private final String AUDIO_COVER = "audio_cover";
 
     public ThumbnailCache(Context context) {
         super(context);
     }
 
-    public File getMiniKindThumbnail(){
-        return createDir(THUMBNAIL_KIND_MINI);
+    public File getVideoThumbnailMiniKind(){
+        return createDir(VIDEO_THUMBNAIL_KIND_MINI);
+    }
+
+    public File getAudioCoverDir(){
+        return createDir(AUDIO_COVER);
     }
 
     @Override
@@ -47,15 +54,69 @@ public class ThumbnailCache extends FileBase {
         return IFileBase.MANAGE_PARENT_DIR_APP_EXTERNAL_CACHE_FILES;
     }
 
-    public String getThumbnail(String path){
-        File file = new File(getMiniKindThumbnail(),MD5Utils.md5(path));
+    public String getVideoThumbnailCachePath(String itemPath){
+        File file = new File(getVideoThumbnailMiniKind(),MD5Utils.md5(itemPath));
         if(file.exists()){
             return file.getAbsolutePath();
         }
         return null;
     }
 
-    public void generatorThumbnail(List<MVideoItem> videoItems, final OnThumbnailListener onThumbnailListener){
+    public String getAudioCoverCachePath(String itemPath){
+        File file = new File(getAudioCoverDir(),MD5Utils.md5(itemPath));
+        if(file.exists()){
+            return file.getAbsolutePath();
+        }
+        return null;
+    }
+
+    public void generatorAudioCover(List<MAudioItem> audioItems, final OnAudioCoverListener onAudioCoverListener){
+        new TaskCallBack<List<MAudioItem>,Integer,List<MAudioItem>>(){
+            @Override
+            public List<MAudioItem> doInBackground(List<MAudioItem>... params) {
+                try {
+                    if(params[0]!=null){
+                        Bitmap bitmap = null;
+                        for(MAudioItem item : params[0]){
+                            if(!TextUtils.isEmpty(getAudioCoverCachePath(item.getPath()))){
+                                continue;
+                            }
+                            bitmap = AudioCoverUtils.createAlbumArt(item.getPath());
+                            if(bitmap!=null){
+                                String path = VideoThumbnailUtil.bitmap2File(bitmap,getAudioCoverDir(),MD5Utils.md5(item.getPath()));
+                                item.setAudioCover(path);
+                                publishProgress(0);
+                            }
+                        }
+                        if(bitmap!=null){
+                            bitmap.recycle();
+                        }
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                return params[0];
+            }
+
+            @Override
+            public void onProgressUpdate(Integer progress) {
+                super.onProgressUpdate(progress);
+                if(onAudioCoverListener !=null){
+                    onAudioCoverListener.onCoverFinish();
+                }
+            }
+
+            @Override
+            public void onPostExecute(List<MAudioItem> videoItems) {
+                super.onPostExecute(videoItems);
+                if(onAudioCoverListener !=null){
+                    onAudioCoverListener.onCoverFinish();
+                }
+            }
+        }.execute(audioItems);
+    }
+
+    public void generatorThumbnail(List<MVideoItem> videoItems, final OnVideoThumbnailListener onVideoThumbnailListener){
         new TaskCallBack<List<MVideoItem>,Integer,List<MVideoItem>>(){
             @Override
             public List<MVideoItem> doInBackground(List<MVideoItem>... params) {
@@ -63,12 +124,12 @@ public class ThumbnailCache extends FileBase {
                     if(params[0]!=null){
                         Bitmap bitmap = null;
                         for(MVideoItem item : params[0]){
-                            if(!TextUtils.isEmpty(getThumbnail(item.getPath()))){
+                            if(!TextUtils.isEmpty(getVideoThumbnailCachePath(item.getPath()))){
                                 continue;
                             }
                             bitmap = VideoThumbnailUtil.getVideoThumb(item.getPath(), MediaStore.Video.Thumbnails.MINI_KIND);
                             if(bitmap!=null){
-                                String path = VideoThumbnailUtil.bitmap2File(bitmap,getMiniKindThumbnail(),MD5Utils.md5(item.getPath()));
+                                String path = VideoThumbnailUtil.bitmap2File(bitmap, getVideoThumbnailMiniKind(),MD5Utils.md5(item.getPath()));
                                 if(!TextUtils.isEmpty(path)){
                                     item.setThumbnail(path);
                                     publishProgress(0);
@@ -88,22 +149,26 @@ public class ThumbnailCache extends FileBase {
             @Override
             public void onProgressUpdate(Integer progress) {
                 super.onProgressUpdate(progress);
-                if(onThumbnailListener!=null){
-                    onThumbnailListener.onThumbnailFinish();
+                if(onVideoThumbnailListener !=null){
+                    onVideoThumbnailListener.onThumbnailFinish();
                 }
             }
 
             @Override
             public void onPostExecute(List<MVideoItem> videoItems) {
                 super.onPostExecute(videoItems);
-                if(onThumbnailListener!=null){
-                    onThumbnailListener.onThumbnailFinish();
+                if(onVideoThumbnailListener !=null){
+                    onVideoThumbnailListener.onThumbnailFinish();
                 }
             }
         }.execute(videoItems);
     }
 
-    public interface OnThumbnailListener{
+    public interface OnVideoThumbnailListener {
         void onThumbnailFinish();
+    }
+
+    public interface OnAudioCoverListener {
+        void onCoverFinish();
     }
 }

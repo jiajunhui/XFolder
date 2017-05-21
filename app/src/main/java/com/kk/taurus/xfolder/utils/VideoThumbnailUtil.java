@@ -6,7 +6,6 @@ import android.media.ThumbnailUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 
 /**
  * Created by Taurus on 2017/5/20.

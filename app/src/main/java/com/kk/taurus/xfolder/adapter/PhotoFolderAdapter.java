@@ -47,6 +47,9 @@ public class PhotoFolderAdapter extends RecyclerView.Adapter<PhotoFolderAdapter.
         holder.cover1.setVisibility(size>=1?View.VISIBLE:View.GONE);
         holder.cover2.setVisibility(size>=2?View.VISIBLE:View.GONE);
         holder.cover3.setVisibility(size>=3?View.VISIBLE:View.GONE);
+        holder.cover4.setVisibility(size>=4?View.VISIBLE:View.GONE);
+        holder.cover5.setVisibility(size>=5?View.VISIBLE:View.GONE);
+        holder.cover6.setVisibility(size>=6?View.VISIBLE:View.GONE);
         if(size >= 1){
             ImageDisplayEngine.displayAsBitmap(mContext,holder.cover1,folder.getItems().get(0).getPath(),R.mipmap.icon_image);
         }
@@ -55,6 +58,15 @@ public class PhotoFolderAdapter extends RecyclerView.Adapter<PhotoFolderAdapter.
         }
         if(size >= 3){
             ImageDisplayEngine.displayAsBitmap(mContext,holder.cover3,folder.getItems().get(2).getPath(),R.mipmap.icon_image);
+        }
+        if(size >= 4){
+            ImageDisplayEngine.displayAsBitmap(mContext,holder.cover4,folder.getItems().get(3).getPath(),R.mipmap.icon_image);
+        }
+        if(size >= 5){
+            ImageDisplayEngine.displayAsBitmap(mContext,holder.cover5,folder.getItems().get(4).getPath(),R.mipmap.icon_image);
+        }
+        if(size >= 6){
+            ImageDisplayEngine.displayAsBitmap(mContext,holder.cover6,folder.getItems().get(5).getPath(),R.mipmap.icon_image);
         }
         if(onItemClickListener!=null){
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +92,9 @@ public class PhotoFolderAdapter extends RecyclerView.Adapter<PhotoFolderAdapter.
         CircularImageView cover1;
         CircularImageView cover2;
         CircularImageView cover3;
+        CircularImageView cover4;
+        CircularImageView cover5;
+        CircularImageView cover6;
         TextView info;
 
         public PhotoFolderItemHolder(View itemView) {
@@ -87,6 +102,9 @@ public class PhotoFolderAdapter extends RecyclerView.Adapter<PhotoFolderAdapter.
             cover1 = (CircularImageView) itemView.findViewById(R.id.iv_cover1);
             cover2 = (CircularImageView) itemView.findViewById(R.id.iv_cover2);
             cover3 = (CircularImageView) itemView.findViewById(R.id.iv_cover3);
+            cover4 = (CircularImageView) itemView.findViewById(R.id.iv_cover4);
+            cover5 = (CircularImageView) itemView.findViewById(R.id.iv_cover5);
+            cover6 = (CircularImageView) itemView.findViewById(R.id.iv_cover6);
             info = (TextView) itemView.findViewById(R.id.tv_folder_info);
         }
     }
