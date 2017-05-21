@@ -7,7 +7,17 @@
     <color name="scan_video_colorPrimary">#352e2e</color>
     <color name="scan_video_colorPrimaryDark">#352e2e</color>
 
+    <color name="scan_image_colorPrimary">#7039d4</color>
+    <color name="scan_image_colorPrimaryDark">#7039d4</color>
+
     <color name="folder_item_image_border_color1">#7aed9d</color>
     <color name="folder_item_image_border_color2">#d93291</color>
     <color name="folder_item_image_border_color3">#283183</color>
+
+
+    <color name="photo_tab_select_color">#eedef7</color>
+    <color name="photo_tab_normal">#ffffff</color>
+
+    <drawable name="photo_tab_selected">@color/photo_tab_select_color</drawable>
+    <drawable name="photo_tab_normal">@color/photo_tab_normal</drawable>
 </resources>

@@ -35,6 +35,10 @@
             android:name=".ui.activity.ScanTextActivity"/>
         <activity
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.ScanImage"
+            android:name=".ui.activity.ScanImagesActivity"/>
+        <activity
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.ScanVideo"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:name=".ui.activity.ScanVideoActivity"/>

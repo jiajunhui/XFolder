@@ -3,8 +3,8 @@ package com.kk.taurus.xfolder.ui.fragment;
 import android.os.Bundle;
 
 import com.kk.taurus.baseframe.bean.PageState;
-import com.kk.taurus.baseframe.ui.fragment.StateFragment;
 import com.kk.taurus.threadpool.TaskCallBack;
+import com.kk.taurus.xfolder.R;
 import com.kk.taurus.xfolder.bean.PhotoDataHelper;
 import com.kk.taurus.xfolder.bean.PhotoFolderData;
 import com.kk.taurus.xfolder.comparator.PhotoFolderComparator;
@@ -16,7 +16,7 @@ import java.util.Collections;
  * Created by Taurus on 2017/5/19.
  */
 
-public class PhotoFolderListFragment extends StateFragment<PhotoFolderData,FragHolderPhotoFolderList> {
+public class PhotoFolderListFragment extends BasePhotoFragment<PhotoFolderData,FragHolderPhotoFolderList> {
 
     @Override
     public FragHolderPhotoFolderList getContentViewHolder(Bundle savedInstanceState) {
@@ -48,5 +48,10 @@ public class PhotoFolderListFragment extends StateFragment<PhotoFolderData,FragH
             }.execute(data);
 
         }
+    }
+
+    @Override
+    public String getPageTitle() {
+        return getString(R.string.photo_folder_page_title);
     }
 }

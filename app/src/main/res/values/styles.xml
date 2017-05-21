@@ -16,4 +16,18 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.ScanImage" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/scan_image_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/scan_image_colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <style name="TabLayoutTextStyle">
+        <item name="android:textSize">13sp</item>
+    </style>
+
+
+
 </resources>

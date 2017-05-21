@@ -4,6 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.kk.taurus.xfolder.ui.fragment.BasePhotoFragment;
+
 import java.util.List;
 
 /**
@@ -12,9 +14,10 @@ import java.util.List;
 
 public class PhotoPagerAdapter extends FragmentStatePagerAdapter {
 
-    private List<Fragment> mFragments;
+    private List<BasePhotoFragment> mFragments;
+    private String[] titles = new String[]{"所有图片","相册"};
 
-    public PhotoPagerAdapter(FragmentManager fm, List<Fragment> fragments) {
+    public PhotoPagerAdapter(FragmentManager fm, List<BasePhotoFragment> fragments) {
         super(fm);
         this.mFragments = fragments;
     }
@@ -33,4 +36,8 @@ public class PhotoPagerAdapter extends FragmentStatePagerAdapter {
         return 0;
     }
 
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return titles[position];
+    }
 }

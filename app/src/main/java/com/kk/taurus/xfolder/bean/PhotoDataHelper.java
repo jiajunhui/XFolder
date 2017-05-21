@@ -8,6 +8,7 @@ public class PhotoDataHelper {
 
     private static PhotoListData photoListData;
     private static PhotoFolderData photoFolderData;
+    private static ScanImageData scanImageData;
 
     public static void putPhotoListData(PhotoListData data){
         photoListData = data;
@@ -25,12 +26,26 @@ public class PhotoDataHelper {
         return photoFolderData;
     }
 
+    public static void putScanImageData(ScanImageData data){
+        scanImageData = data;
+    }
+
+    public static ScanImageData getScanImageData(){
+        return scanImageData;
+    }
+
     public static void clear(){
         if(photoListData!=null && photoListData.getPhotoItems()!=null){
             photoListData.getPhotoItems().clear();
         }
         if(photoFolderData!=null && photoFolderData.getFolders()!=null){
             photoFolderData.getFolders().clear();
+        }
+    }
+
+    public static void clearScanImageData(){
+        if(scanImageData!=null && scanImageData.getPhotoItems()!=null){
+            scanImageData.getPhotoItems().clear();
         }
     }
 }

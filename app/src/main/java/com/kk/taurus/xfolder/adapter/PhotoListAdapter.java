@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import com.jiajunhui.xapp.medialoader.bean.PhotoItem;
 import com.kk.taurus.xfolder.R;
+import com.kk.taurus.xfolder.callback.OnItemClickListener;
 import com.kk.taurus.xfolder.engine.ImageDisplayEngine;
 
 import java.util.List;
@@ -22,11 +23,16 @@ public class PhotoListAdapter extends RecyclerView.Adapter<PhotoListAdapter.Phot
     private Context mContext;
     private List<PhotoItem> mPhotoItems;
     private int mItemW;
+    private OnItemClickListener onItemClickListener;
 
     public PhotoListAdapter(Context context,List<PhotoItem> items){
         this.mContext = context;
         this.mPhotoItems = items;
         mItemW = getItemWidth();
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 
     @Override
@@ -35,13 +41,21 @@ public class PhotoListAdapter extends RecyclerView.Adapter<PhotoListAdapter.Phot
     }
 
     @Override
-    public void onBindViewHolder(PhotoItemHolder holder, int position) {
+    public void onBindViewHolder(final PhotoItemHolder holder, final int position) {
         PhotoItem item = mPhotoItems.get(position);
         ViewGroup.LayoutParams layoutParams = holder.photo.getLayoutParams();
         layoutParams.width = mItemW;
         layoutParams.height = mItemW;
         holder.photo.setLayoutParams(layoutParams);
         ImageDisplayEngine.display(mContext,holder.photo,item.getPath(),R.mipmap.icon_image);
+        if(onItemClickListener!=null){
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onItemClickListener.onItemClick(holder,position);
+                }
+            });
+        }
     }
 
     private int getItemWidth(){

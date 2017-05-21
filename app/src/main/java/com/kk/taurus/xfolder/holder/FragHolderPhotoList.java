@@ -12,6 +12,7 @@ import com.kk.taurus.baseframe.base.ContentHolder;
 import com.kk.taurus.xfolder.R;
 import com.kk.taurus.xfolder.adapter.PhotoListAdapter;
 import com.kk.taurus.xfolder.bean.PhotoListData;
+import com.kk.taurus.xfolder.callback.OnItemClickListener;
 import com.kk.taurus.xfolder.widget.HorizontalDividerItemDecoration;
 import com.kk.taurus.xfolder.widget.VerticalDividerItemDecoration;
 
@@ -22,15 +23,21 @@ import java.util.List;
  * Created by Taurus on 2017/5/19.
  */
 
-public class FragHolderPhotoList extends ContentHolder<PhotoListData> {
+public class FragHolderPhotoList extends ContentHolder<PhotoListData> implements OnItemClickListener {
 
     public final int SPAN_COUNT = 4;
     private RecyclerView mRecycler;
     private PhotoListAdapter mAdapter;
     private List<PhotoItem> mPhotoItems = new ArrayList<>();
 
+    private OnPhotoListListener onPhotoListListener;
+
     public FragHolderPhotoList(Context context) {
         super(context);
+    }
+
+    public void setOnPhotoListListener(OnPhotoListListener onPhotoListListener) {
+        this.onPhotoListListener = onPhotoListListener;
     }
 
     @Override
@@ -52,6 +59,7 @@ public class FragHolderPhotoList extends ContentHolder<PhotoListData> {
         mRecycler.addItemDecoration(horizontalDividerItemDecoration);
         mRecycler.addItemDecoration(verticalDividerItemDecoration);
         mAdapter = new PhotoListAdapter(mContext,mPhotoItems);
+        mAdapter.setOnItemClickListener(this);
         mRecycler.setAdapter(mAdapter);
     }
 
@@ -61,5 +69,16 @@ public class FragHolderPhotoList extends ContentHolder<PhotoListData> {
         mPhotoItems.clear();
         mPhotoItems.addAll(mData.getPhotoItems());
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemClick(RecyclerView.ViewHolder holder, int position) {
+        if(onPhotoListListener!=null){
+            onPhotoListListener.onItemClick(mPhotoItems,position);
+        }
+    }
+
+    public interface OnPhotoListListener{
+        void onItemClick(List<PhotoItem> items,int position);
     }
 }
