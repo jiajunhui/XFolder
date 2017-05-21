@@ -6,15 +6,28 @@
     android:layout_height="match_parent"
     android:background="@color/scan_audio_colorPrimary">
 
-    <ak.sh.ay.musicwave.MusicWave
-        android:id="@+id/musicWave"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        app:colorGradient="true"
-        app:endColor="#6b5981"
-        app:startColor="#0307f9"
-        app:waveThickness="3" />
+        android:layout_weight="1">
+        <ImageView
+            android:id="@+id/iv_cover"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#55000000"/>
+        <ak.sh.ay.musicwave.MusicWave
+            android:id="@+id/musicWave"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:colorGradient="true"
+            app:endColor="#1151ab"
+            app:startColor="#f9e503"
+            app:waveThickness="3" />
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"

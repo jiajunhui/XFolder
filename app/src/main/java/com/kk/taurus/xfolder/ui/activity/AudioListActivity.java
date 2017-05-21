@@ -8,7 +8,6 @@ import com.jiajunhui.xapp.medialoader.loader.MediaLoader;
 import com.kk.taurus.baseframe.bean.PageState;
 import com.kk.taurus.baseframe.ui.activity.ToolBarActivity;
 import com.kk.taurus.xfolder.bean.AudioListData;
-import com.kk.taurus.xfolder.bean.FileItem;
 import com.kk.taurus.xfolder.bean.MAudioItem;
 import com.kk.taurus.xfolder.bean.ScanAudioData;
 import com.kk.taurus.xfolder.config.ThumbnailCache;
@@ -64,11 +63,5 @@ public class AudioListActivity extends ToolBarActivity<AudioListData,AudioListHo
         Bundle bundle = new Bundle();
         bundle.putSerializable(ScanAudioActivity.KEY_AUDIO_DATA,data);
         intentTo(ScanAudioActivity.class,bundle);
-//        FileItem fileItem = new FileItem();
-//        fileItem.setPath(item.getPath());
-//        fileItem.setName(item.getDisplayName());
-//        Bundle bundle = new Bundle();
-//        bundle.putSerializable(ScanVideoActivity.KEY_SCAN_VIDEO_DATA,fileItem);
-//        intentTo(ScanVideoActivity.class,bundle);
     }
 }

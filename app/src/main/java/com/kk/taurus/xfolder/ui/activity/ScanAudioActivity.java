@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.kk.taurus.baseframe.bean.PageState;
 import com.kk.taurus.baseframe.ui.activity.ToolBarActivity;
+import com.kk.taurus.xfolder.bean.MAudioItem;
 import com.kk.taurus.xfolder.bean.ScanAudioData;
 import com.kk.taurus.xfolder.holder.ScanAudioHolder;
 
@@ -21,11 +22,24 @@ public class ScanAudioActivity extends ToolBarActivity<ScanAudioData,ScanAudioHo
     }
 
     @Override
+    public void initData() {
+        super.initData();
+        setElevation(0f);
+    }
+
+    @Override
     public void loadState() {
         ScanAudioData data = (ScanAudioData) getIntent().getSerializableExtra(KEY_AUDIO_DATA);
         if(data!=null){
             setData(data);
             setPageState(PageState.success());
         }
+    }
+
+    @Override
+    public void setData(ScanAudioData data) {
+        super.setData(data);
+        MAudioItem item = data.getAudioItem();
+        setCenterTitle(item.getDisplayName());
     }
 }
