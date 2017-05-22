@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.kk.taurus.baseframe.base.ContentHolder;
+import com.kk.taurus.baseframe.manager.SharedPrefer;
 import com.kk.taurus.filebase.tools.BytesTool;
 import com.kk.taurus.playerbase.DefaultPlayer;
 import com.kk.taurus.playerbase.callback.OnPlayerEventListener;
@@ -62,7 +63,8 @@ public class ScanVideoHolder extends ContentHolder<ScanVideoData> implements OnP
         super.onHolderCreated(savedInstanceState);
         mPlayer = new DefaultPlayer(mContext);
         mPlayer.setOnPlayerEventListener(this);
-        mPlayer.setAspectRatio(AspectRatio.AspectRatio_FILL_PARENT);
+        String configAspect = SharedPrefer.getInstance().getString(mContext,SettingHolder.KEY_VIDEO_ASPECT,SettingHolder.VIDEO_ASPECT_VALUE_FILL);
+        mPlayer.setAspectRatio(getAspect(configAspect));
         DefaultReceiverCollections receiverCollections = new DefaultReceiverCollections(mContext);
         PlayerControllerCover playerControllerCover = new PlayerControllerCover(mContext);
         receiverCollections.buildDefault().addCover(BasePlayerControllerCover.KEY,playerControllerCover);
@@ -158,6 +160,21 @@ public class ScanVideoHolder extends ContentHolder<ScanVideoData> implements OnP
                 updateVideoInfo();
                 updateVisualizer();
                 break;
+        }
+    }
+
+    private AspectRatio getAspect(String configAspect){
+        switch (configAspect){
+            case SettingHolder.VIDEO_ASPECT_VALUE_FILL:
+                return AspectRatio.AspectRatio_FILL_PARENT;
+            case SettingHolder.VIDEO_ASPECT_VALUE_16_9:
+                return AspectRatio.AspectRatio_16_9;
+            case SettingHolder.VIDEO_ASPECT_VALUE_4_3:
+                return AspectRatio.AspectRatio_4_3;
+            case SettingHolder.VIDEO_ASPECT_VALUE_WRAP:
+                return AspectRatio.AspectRatio_ORIGIN;
+            default:
+                return AspectRatio.AspectRatio_FILL_PARENT;
         }
     }
 

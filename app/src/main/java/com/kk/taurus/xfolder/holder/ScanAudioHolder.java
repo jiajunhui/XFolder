@@ -70,14 +70,13 @@ public class ScanAudioHolder extends ContentHolder<ScanAudioData> {
     public void onHolderCreated(Bundle savedInstanceState) {
         super.onHolderCreated(savedInstanceState);
         mPlayer = new AndroidMediaPlayer();
-//        mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        mPlayer.setAudioStreamType(AudioManager.AUDIO_SESSION_ID_GENERATE);
-        requestAudioManager();
+        mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+//        mPlayer.setAudioStreamType(AudioManager.AUDIO_SESSION_ID_GENERATE);
+        updateVisualizer();
         mPlayer.setOnPreparedListener(new IMediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(IMediaPlayer mp) {
                 mPlayer.start();
-                updateVisualizer();
             }
         });
 
@@ -88,16 +87,6 @@ public class ScanAudioHolder extends ContentHolder<ScanAudioData> {
                 return false;
             }
         });
-    }
-
-    private void requestAudioManager() {
-        AudioManager am = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
-        am.requestAudioFocus(null, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
-    }
-
-    private void releaseAudioManager() {
-        AudioManager am = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
-        am.abandonAudioFocus(null);
     }
 
     @Override
@@ -143,6 +132,5 @@ public class ScanAudioHolder extends ContentHolder<ScanAudioData> {
         if(mVisualizer!=null){
             mVisualizer.setEnabled(false);
         }
-        releaseAudioManager();
     }
 }

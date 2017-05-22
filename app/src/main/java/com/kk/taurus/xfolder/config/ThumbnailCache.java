@@ -5,14 +5,15 @@ import android.graphics.Bitmap;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 
+import com.jiajunhui.xapp.medialoader.utils.AudioCoverUtil;
+import com.jiajunhui.xapp.medialoader.utils.VideoThumbnailUtil;
 import com.kk.taurus.filebase.base.FileBase;
 import com.kk.taurus.filebase.base.IFileBase;
+import com.kk.taurus.filebase.engine.FileEngine;
 import com.kk.taurus.filebase.tools.MD5Utils;
 import com.kk.taurus.threadpool.TaskCallBack;
 import com.kk.taurus.xfolder.bean.MAudioItem;
 import com.kk.taurus.xfolder.bean.MVideoItem;
-import com.kk.taurus.xfolder.utils.AudioCoverUtils;
-import com.kk.taurus.xfolder.utils.VideoThumbnailUtil;
 
 import java.io.File;
 import java.util.List;
@@ -81,9 +82,9 @@ public class ThumbnailCache extends FileBase {
                             if(!TextUtils.isEmpty(getAudioCoverCachePath(item.getPath()))){
                                 continue;
                             }
-                            bitmap = AudioCoverUtils.createAlbumArt(item.getPath());
+                            bitmap = AudioCoverUtil.createAlbumArt(item.getPath());
                             if(bitmap!=null){
-                                String path = VideoThumbnailUtil.bitmap2File(bitmap,getAudioCoverDir(),MD5Utils.md5(item.getPath()));
+                                String path = FileEngine.bitmapToFile(bitmap,getAudioCoverDir(),MD5Utils.md5(item.getPath()));
                                 item.setAudioCover(path);
                                 publishProgress(0);
                             }
@@ -129,7 +130,7 @@ public class ThumbnailCache extends FileBase {
                             }
                             bitmap = VideoThumbnailUtil.getVideoThumb(item.getPath(), MediaStore.Video.Thumbnails.MINI_KIND);
                             if(bitmap!=null){
-                                String path = VideoThumbnailUtil.bitmap2File(bitmap, getVideoThumbnailMiniKind(),MD5Utils.md5(item.getPath()));
+                                String path = FileEngine.bitmapToFile(bitmap, getVideoThumbnailMiniKind(),MD5Utils.md5(item.getPath()));
                                 if(!TextUtils.isEmpty(path)){
                                     item.setThumbnail(path);
                                     publishProgress(0);

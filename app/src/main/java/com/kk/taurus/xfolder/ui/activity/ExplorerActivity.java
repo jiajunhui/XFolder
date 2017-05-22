@@ -10,6 +10,7 @@ import android.view.Menu;
 import com.kk.taurus.baseframe.bean.PageState;
 import com.kk.taurus.baseframe.ui.activity.ToolBarActivity;
 import com.kk.taurus.filebase.entity.Storage;
+import com.kk.taurus.filebase.utils.MIMEUtils;
 import com.kk.taurus.threadpool.TaskCallBack;
 import com.kk.taurus.xfolder.BuildConfig;
 import com.kk.taurus.xfolder.R;
@@ -22,7 +23,6 @@ import com.kk.taurus.xfolder.engine.StackManager;
 import com.kk.taurus.xfolder.holder.ExplorerHolder;
 import com.kk.taurus.xfolder.utils.ExtensionUtils;
 import com.kk.taurus.xfolder.utils.IntentUtils;
-import com.kk.taurus.xfolder.utils.MIMEUtils;
 
 import java.io.File;
 import java.util.List;
