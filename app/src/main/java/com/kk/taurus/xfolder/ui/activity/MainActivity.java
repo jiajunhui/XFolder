@@ -44,6 +44,9 @@ public class MainActivity extends ToolBarActivity<MainHolderData,MainHolder> imp
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
+            case R.id.main_search:
+                showToast("search");
+                break;
             case R.id.setting:
                 intentTo(SettingActivity.class);
                 break;

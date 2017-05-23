@@ -58,6 +58,9 @@
             android:name=".ui.activity.PhotoListActivity"/>
         <activity
             android:screenOrientation="portrait"
+            android:name=".ui.activity.SearchActivity"/>
+        <activity
+            android:screenOrientation="portrait"
             android:name=".ui.activity.SettingActivity"/>
         <activity
             android:screenOrientation="portrait"
