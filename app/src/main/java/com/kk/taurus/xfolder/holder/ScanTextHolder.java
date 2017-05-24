@@ -3,14 +3,15 @@ package com.kk.taurus.xfolder.holder;
 import android.content.Context;
 import android.net.Uri;
 import android.text.TextUtils;
-import android.webkit.WebSettings;
+import android.view.View;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 
 import com.kk.taurus.baseframe.base.ContentHolder;
 import com.kk.taurus.xfolder.R;
 import com.kk.taurus.xfolder.bean.FileItem;
 import com.kk.taurus.xfolder.bean.ScanTextData;
+import com.kk.taurus.xfolder.widget.UIWebView;
 
 import java.io.File;
 
@@ -20,7 +21,8 @@ import java.io.File;
 
 public class ScanTextHolder extends ContentHolder<ScanTextData> {
 
-    private WebView mWebView;
+    private UIWebView mWebView;
+    private ProgressBar mProgressBar;
 
     public ScanTextHolder(Context context) {
         super(context);
@@ -30,19 +32,19 @@ public class ScanTextHolder extends ContentHolder<ScanTextData> {
     public void onCreate() {
         setContentView(R.layout.activity_scan_text);
         mWebView = getViewById(R.id.web_view);
+        mProgressBar = getViewById(R.id.progressBar);
         initWebView();
     }
 
     private void initWebView(){
-        WebSettings settings = mWebView.getSettings();
-        settings.setDefaultTextEncodingName("utf-8");
-        settings.setJavaScriptEnabled(true);
-
-        mWebView.setWebViewClient(new WebViewClient(){
+        mWebView.setDefaultSettings();
+        mWebView.setOnLoadProgressListener(new UIWebView.OnLoadProgressListener() {
             @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return true;
+            public void onProgressChanged(WebView webView, int newProgress) {
+                mProgressBar.setProgress(newProgress);
+                if(newProgress>=100){
+                    mProgressBar.setVisibility(View.GONE);
+                }
             }
         });
     }

@@ -9,8 +9,9 @@ import android.view.Menu;
 
 import com.kk.taurus.baseframe.bean.PageState;
 import com.kk.taurus.baseframe.ui.activity.ToolBarActivity;
+import com.kk.taurus.filebase.engine.FileEngine;
 import com.kk.taurus.filebase.entity.Storage;
-import com.kk.taurus.filebase.utils.MIMEUtils;
+import com.kk.taurus.filebase.utils.MimeUtils;
 import com.kk.taurus.threadpool.TaskCallBack;
 import com.kk.taurus.xfolder.BuildConfig;
 import com.kk.taurus.xfolder.R;
@@ -21,7 +22,6 @@ import com.kk.taurus.xfolder.bean.StackEntity;
 import com.kk.taurus.xfolder.bean.StateRecord;
 import com.kk.taurus.xfolder.engine.StackManager;
 import com.kk.taurus.xfolder.holder.ExplorerHolder;
-import com.kk.taurus.xfolder.utils.ExtensionUtils;
 import com.kk.taurus.xfolder.utils.IntentUtils;
 
 import java.io.File;
@@ -111,15 +111,15 @@ public class ExplorerActivity extends ToolBarActivity<StackEntity,ExplorerHolder
                 try{
                     File file = new File(item.getPath());
                     Intent intent = new Intent(Intent.ACTION_VIEW);
+                    String type = MimeUtils.guessMimeTypeFromExtension(FileEngine.getExtFromFilename(file.getName()));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                         intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                         Uri contentUri = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".fileProvider", file);
-                        intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
+                        intent.setDataAndType(contentUri, type);
                     }else{
-                        intent.addCategory(Intent.CATEGORY_DEFAULT);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        Uri uri = Uri.fromFile(file);
-                        intent.setDataAndType(uri, MIMEUtils.getMIMEType(ExtensionUtils.getExtension(item.getName())));
+                        intent.setAction(android.content.Intent.ACTION_VIEW);
+                        intent.setDataAndType(Uri.fromFile(file), type);
                     }
                     startActivity(intent);
                 }catch (Exception e){

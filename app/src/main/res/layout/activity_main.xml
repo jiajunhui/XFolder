@@ -12,11 +12,12 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="10dp">
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             >
             <LinearLayout
                 android:id="@+id/ll_image"
@@ -24,7 +25,8 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:padding="20dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
                 android:gravity="center">
                 <ImageView
                     android:layout_width="wrap_content"
@@ -34,15 +36,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:textSize="16sp"
-                    android:textColor="#444444"
+                    android:textSize="@dimen/media_type_text_size"
+                    android:textColor="@color/media_type_text_color"
                     android:text="图片"/>
                 <TextView
                     android:id="@+id/tv_image_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:textColor="#666666"
+                    android:textSize="@dimen/media_type_number_text_size"
+                    android:textColor="@color/media_type_number_color"
                     android:text=""/>
             </LinearLayout>
 
@@ -52,7 +54,8 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:padding="20dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
                 android:gravity="center">
                 <ImageView
                     android:layout_width="wrap_content"
@@ -62,15 +65,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:textSize="16sp"
-                    android:textColor="#444444"
+                    android:textSize="@dimen/media_type_text_size"
+                    android:textColor="@color/media_type_text_color"
                     android:text="视频"/>
                 <TextView
                     android:id="@+id/tv_video_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:textColor="#666666"
+                    android:textSize="@dimen/media_type_number_text_size"
+                    android:textColor="@color/media_type_number_color"
                     android:text=""/>
             </LinearLayout>
 
@@ -80,7 +83,8 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:padding="20dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
                 android:gravity="center">
                 <ImageView
                     android:layout_width="wrap_content"
@@ -90,15 +94,111 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:textSize="16sp"
-                    android:textColor="#444444"
+                    android:textSize="@dimen/media_type_text_size"
+                    android:textColor="@color/media_type_text_color"
                     android:text="音频"/>
                 <TextView
                     android:id="@+id/tv_music_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:textColor="#666666"
+                    android:textSize="@dimen/media_type_number_text_size"
+                    android:textColor="@color/media_type_number_color"
+                    android:text=""/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!--apk zip doc-->
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            >
+            <LinearLayout
+                android:id="@+id/ll_apk"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/type_apk"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textSize="@dimen/media_type_text_size"
+                    android:textColor="@color/media_type_text_color"
+                    android:text="安装包"/>
+                <TextView
+                    android:id="@+id/tv_apk_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/media_type_number_text_size"
+                    android:textColor="@color/media_type_number_color"
+                    android:text=""/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_zip"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/type_zip"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textSize="@dimen/media_type_text_size"
+                    android:textColor="@color/media_type_text_color"
+                    android:text="压缩包"/>
+                <TextView
+                    android:id="@+id/tv_zip_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/media_type_number_text_size"
+                    android:textColor="@color/media_type_number_color"
+                    android:text=""/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_doc"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/type_doc"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textSize="@dimen/media_type_text_size"
+                    android:textColor="@color/media_type_text_color"
+                    android:text="文档"/>
+                <TextView
+                    android:id="@+id/tv_doc_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/media_type_number_text_size"
+                    android:textColor="@color/media_type_number_color"
                     android:text=""/>
             </LinearLayout>
         </LinearLayout>
@@ -107,14 +207,14 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:layout_below="@id/ll_media">
         <TextView
             android:id="@+id/tv_storage_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textColor="#555555"
             android:text="存储设备"/>
         <LinearLayout

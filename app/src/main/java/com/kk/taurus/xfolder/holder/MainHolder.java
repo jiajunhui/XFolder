@@ -6,6 +6,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jiajunhui.xapp.medialoader.bean.AudioItem;
+import com.jiajunhui.xapp.medialoader.bean.FileItem;
 import com.jiajunhui.xapp.medialoader.bean.PhotoItem;
 import com.jiajunhui.xapp.medialoader.bean.VideoItem;
 import com.kk.taurus.baseframe.base.ContentHolder;
@@ -27,10 +28,16 @@ public class MainHolder extends ContentHolder<MainHolderData> {
     private View mImage;
     private View mVideo;
     private View mMusic;
+    private View mApk;
+    private View mZip;
+    private View mDoc;
 
     private TextView mTvImageNum;
     private TextView mTvVideoNum;
     private TextView mTvMusicNum;
+    private TextView mTvApkNum;
+    private TextView mTvZipNum;
+    private TextView mTvDocNum;
 
     private LinearLayout mStorageContainer;
 
@@ -49,16 +56,25 @@ public class MainHolder extends ContentHolder<MainHolderData> {
         mImage = getViewById(R.id.ll_image);
         mVideo = getViewById(R.id.ll_video);
         mMusic = getViewById(R.id.ll_music);
+        mApk = getViewById(R.id.ll_apk);
+        mZip = getViewById(R.id.ll_zip);
+        mDoc = getViewById(R.id.ll_doc);
 
         mTvImageNum = getViewById(R.id.tv_image_num);
         mTvVideoNum = getViewById(R.id.tv_video_num);
         mTvMusicNum = getViewById(R.id.tv_music_num);
+        mTvApkNum = getViewById(R.id.tv_apk_num);
+        mTvZipNum = getViewById(R.id.tv_zip_num);
+        mTvDocNum = getViewById(R.id.tv_doc_num);
 
         mStorageContainer = getViewById(R.id.ll_storage);
 
         mImage.setOnClickListener(this);
         mVideo.setOnClickListener(this);
         mMusic.setOnClickListener(this);
+        mApk.setOnClickListener(this);
+        mZip.setOnClickListener(this);
+        mDoc.setOnClickListener(this);
     }
 
     @Override
@@ -66,9 +82,24 @@ public class MainHolder extends ContentHolder<MainHolderData> {
         super.refreshView();
         MediaEntity entity = mData.getMediaEntity();
         if(entity!=null){
-            mTvImageNum.setText(getNumberText(entity.getPhotoItems().size()));
-            mTvVideoNum.setText(getNumberText(entity.getVideoItems().size()));
-            mTvMusicNum.setText(getNumberText(entity.getAudioItems().size()));
+            if(entity.getPhotoResult()!=null && entity.getPhotoResult().getItems()!=null){
+                mTvImageNum.setText(getNumberText(entity.getPhotoResult().getItems().size()));
+            }
+            if(entity.getVideoResult()!=null && entity.getVideoResult().getItems()!=null){
+                mTvVideoNum.setText(getNumberText(entity.getVideoResult().getItems().size()));
+            }
+            if(entity.getAudioResult()!=null && entity.getAudioResult().getItems()!=null){
+                mTvMusicNum.setText(getNumberText(entity.getAudioResult().getItems().size()));
+            }
+            if(entity.getApkResult()!=null && entity.getApkResult().getItems()!=null){
+                mTvApkNum.setText(getNumberText(entity.getApkResult().getItems().size()));
+            }
+            if(entity.getZipResult()!=null && entity.getZipResult().getItems()!=null){
+                mTvZipNum.setText(getNumberText(entity.getZipResult().getItems().size()));
+            }
+            if(entity.getDocResult()!=null && entity.getDocResult().getItems()!=null){
+                mTvDocNum.setText(getNumberText(entity.getDocResult().getItems().size()));
+            }
         }
         List<Storage> storageList = mData.getStorageList();
         mStorageContainer.removeAllViews();
@@ -99,18 +130,33 @@ public class MainHolder extends ContentHolder<MainHolderData> {
         super.onClick(v);
         switch (v.getId()){
             case R.id.ll_image:
-                if(mOnMainListener!=null){
-                    mOnMainListener.intentToPhotoList(mData.getMediaEntity().getPhotoItems());
+                if(mOnMainListener!=null && mData.getMediaEntity().getPhotoResult()!=null){
+                    mOnMainListener.intentToPhotoList(mData.getMediaEntity().getPhotoResult().getItems());
                 }
                 break;
             case R.id.ll_video:
-                if(mOnMainListener!=null){
-                    mOnMainListener.intentToVideoList(mData.getMediaEntity().getVideoItems());
+                if(mOnMainListener!=null && mData.getMediaEntity().getVideoResult()!=null){
+                    mOnMainListener.intentToVideoList(mData.getMediaEntity().getVideoResult().getItems());
                 }
                 break;
             case R.id.ll_music:
-                if(mOnMainListener!=null){
-                    mOnMainListener.intentToAudioList(mData.getMediaEntity().getAudioItems());
+                if(mOnMainListener!=null && mData.getMediaEntity().getAudioResult()!=null){
+                    mOnMainListener.intentToAudioList(mData.getMediaEntity().getAudioResult().getItems());
+                }
+                break;
+            case R.id.ll_apk:
+                if(mOnMainListener!=null && mData.getMediaEntity().getApkResult()!=null){
+                    mOnMainListener.intentToApkList(mData.getMediaEntity().getApkResult().getItems());
+                }
+                break;
+            case R.id.ll_zip:
+                if(mOnMainListener!=null && mData.getMediaEntity().getZipResult()!=null){
+                    mOnMainListener.intentToZipList(mData.getMediaEntity().getZipResult().getItems());
+                }
+                break;
+            case R.id.ll_doc:
+                if(mOnMainListener!=null && mData.getMediaEntity().getDocResult()!=null){
+                    mOnMainListener.intentToDocList(mData.getMediaEntity().getDocResult().getItems());
                 }
                 break;
         }
@@ -125,5 +171,8 @@ public class MainHolder extends ContentHolder<MainHolderData> {
         void intentToVideoList(List<VideoItem> videoItems);
         void intentToAudioList(List<AudioItem> audioItems);
         void intentToPhotoList(List<PhotoItem> photoItems);
+        void intentToApkList(List<FileItem> items);
+        void intentToZipList(List<FileItem> items);
+        void intentToDocList(List<FileItem> items);
     }
 }

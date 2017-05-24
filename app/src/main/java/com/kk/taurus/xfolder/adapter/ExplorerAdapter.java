@@ -12,6 +12,7 @@ import com.kk.taurus.xfolder.R;
 import com.kk.taurus.xfolder.bean.BaseItem;
 import com.kk.taurus.xfolder.bean.FileItem;
 import com.kk.taurus.xfolder.bean.FolderItem;
+import com.kk.taurus.xfolder.config.ThumbnailCache;
 import com.kk.taurus.xfolder.engine.ImageDisplayEngine;
 import com.kk.taurus.xfolder.utils.ExtensionUtils;
 
@@ -27,6 +28,7 @@ public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.ItemHo
     private Context mContext;
     private List<BaseItem> mItems = new ArrayList<>();
     private OnItemListener onItemListener;
+    private ThumbnailCache thumbnailCache;
 
     public void setOnItemListener(OnItemListener onItemListener) {
         this.onItemListener = onItemListener;
@@ -35,6 +37,7 @@ public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.ItemHo
     public ExplorerAdapter(Context context, List<BaseItem> items){
         this.mContext = context;
         this.mItems = items;
+        thumbnailCache = new ThumbnailCache(context);
     }
 
     @Override
@@ -49,6 +52,9 @@ public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.ItemHo
         int resId = ExtensionUtils.getImageRes(item);
         if(resId == R.mipmap.icon_image){
             ImageDisplayEngine.display(mContext,holder.icon,item.getPath(),R.mipmap.icon_image);
+        }else if(resId == R.mipmap.icon_apk){
+            String path = thumbnailCache.getApkIconPath(mContext,item.getPath());
+            ImageDisplayEngine.display(mContext,holder.icon,path,R.mipmap.icon_apk);
         }else{
             holder.icon.setImageResource(resId);
         }

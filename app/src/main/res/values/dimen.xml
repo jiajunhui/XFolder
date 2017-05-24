@@ -2,4 +2,7 @@
 <resources>
     <dimen name="photo_folder_circle_icon_w">70dp</dimen>
     <dimen name="photo_folder_circle_icon_h">70dp</dimen>
+
+    <dimen name="media_type_text_size">14sp</dimen>
+    <dimen name="media_type_number_text_size">12sp</dimen>
 </resources>
