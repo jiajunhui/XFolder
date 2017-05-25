@@ -11,7 +11,7 @@ import com.kk.taurus.baseframe.ui.activity.ToolBarActivity;
 import com.kk.taurus.xfolder.bean.FileItem;
 import com.kk.taurus.xfolder.bean.MVideoItem;
 import com.kk.taurus.xfolder.bean.VideoListData;
-import com.kk.taurus.xfolder.config.ThumbnailCache;
+import com.kk.taurus.xfolder.engine.CacheEngine;
 import com.kk.taurus.xfolder.holder.VideoListHolder;
 
 import java.util.List;
@@ -22,7 +22,6 @@ import java.util.List;
 
 public class VideoListActivity extends ToolBarActivity<VideoListData,VideoListHolder> implements VideoListHolder.OnVideoListListener {
 
-    private ThumbnailCache thumbnailCache;
     private AsyncTask mTask;
 
     @Override
@@ -33,7 +32,6 @@ public class VideoListActivity extends ToolBarActivity<VideoListData,VideoListHo
     @Override
     public void initData() {
         super.initData();
-        thumbnailCache = new ThumbnailCache(this);
         setToolBarTitle("视频");
         mContentHolder.setOnVideoListListener(this);
     }
@@ -45,11 +43,11 @@ public class VideoListActivity extends ToolBarActivity<VideoListData,VideoListHo
             @Override
             public void onResult(VideoResult result) {
                 VideoListData data = new VideoListData();
-                List<MVideoItem> videoItems = VideoListData.trans(thumbnailCache,result.getItems());
+                List<MVideoItem> videoItems = VideoListData.trans(result.getItems());
                 data.setVideoItems(videoItems);
                 setData(data);
                 setPageState(PageState.success());
-                mTask = thumbnailCache.generatorThumbnail(videoItems, new ThumbnailCache.OnVideoThumbnailListener() {
+                mTask = CacheEngine.getInstance().generatorThumbnail(videoItems, new CacheEngine.OnVideoThumbnailListener() {
                     @Override
                     public void onThumbnailFinish() {
                         mContentHolder.notifyDataChange();

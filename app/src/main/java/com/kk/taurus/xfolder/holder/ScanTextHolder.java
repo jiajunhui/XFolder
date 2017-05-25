@@ -4,8 +4,10 @@ import android.content.Context;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import com.kk.taurus.baseframe.base.ContentHolder;
 import com.kk.taurus.xfolder.R;
@@ -21,6 +23,7 @@ import java.io.File;
 
 public class ScanTextHolder extends ContentHolder<ScanTextData> {
 
+    private RelativeLayout mContainer;
     private UIWebView mWebView;
     private ProgressBar mProgressBar;
 
@@ -31,8 +34,10 @@ public class ScanTextHolder extends ContentHolder<ScanTextData> {
     @Override
     public void onCreate() {
         setContentView(R.layout.activity_scan_text);
-        mWebView = getViewById(R.id.web_view);
+        mContainer = getViewById(R.id.container);
         mProgressBar = getViewById(R.id.progressBar);
+        mWebView = new UIWebView(mContext);
+        mContainer.addView(mWebView,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         initWebView();
     }
 
@@ -59,6 +64,20 @@ public class ScanTextHolder extends ContentHolder<ScanTextData> {
             Uri uri = Uri.fromFile(file);
             String url = uri.toString();
             mWebView.loadUrl(url);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(mWebView!=null){
+            mWebView.clearHistory();
+            mWebView.clearFormData();
+            mWebView.clearCache(false);
+            mWebView.destroy();
+        }
+        if(mContainer!=null){
+            mContainer.removeAllViews();
         }
     }
 }

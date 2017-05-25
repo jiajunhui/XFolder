@@ -21,7 +21,7 @@ import com.kk.taurus.playerbase.setting.VideoData;
 import com.kk.taurus.xfolder.R;
 import com.kk.taurus.xfolder.bean.MAudioItem;
 import com.kk.taurus.xfolder.bean.ScanAudioData;
-import com.kk.taurus.xfolder.config.ThumbnailCache;
+import com.kk.taurus.xfolder.engine.CacheEngine;
 import com.kk.taurus.xfolder.engine.ImageDisplayEngine;
 
 import java.util.List;
@@ -45,8 +45,6 @@ public class ScanAudioHolder extends ContentHolder<ScanAudioData> {
     private final int STATE_START = 2;
     private int mState = STATE_START;
 
-    private ThumbnailCache thumbnailCache;
-
     public ScanAudioHolder(Context context) {
         super(context);
     }
@@ -54,9 +52,6 @@ public class ScanAudioHolder extends ContentHolder<ScanAudioData> {
     @Override
     public void onCreate() {
         setContentView(R.layout.activity_scan_audio);
-
-        thumbnailCache = new ThumbnailCache(mContext);
-
         mMusicWave = getViewById(R.id.musicWave);
         mStateView = getViewById(R.id.iv_state);
         mCover = getViewById(R.id.iv_cover);
@@ -142,7 +137,7 @@ public class ScanAudioHolder extends ContentHolder<ScanAudioData> {
                     List<AudioItem> items = result.getItems();
                     if(items.size()>0){
                         AudioItem audioItem = items.get(0);
-                        String cache = thumbnailCache.getAudioCover(audioItem.getPath());
+                        String cache = CacheEngine.getInstance().getAudioCover(audioItem.getPath());
                         ImageDisplayEngine.display(mContext,mCover,cache,R.mipmap.icon_scan_audio);
                     }
                 }

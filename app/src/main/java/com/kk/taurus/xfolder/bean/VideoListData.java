@@ -4,7 +4,7 @@ import android.text.TextUtils;
 
 import com.jiajunhui.xapp.medialoader.bean.VideoItem;
 import com.kk.taurus.baseframe.base.HolderData;
-import com.kk.taurus.xfolder.config.ThumbnailCache;
+import com.kk.taurus.xfolder.engine.CacheEngine;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,12 +26,12 @@ public class VideoListData implements HolderData,Serializable {
         this.videoItems = videoItems;
     }
 
-    public static List<MVideoItem> trans(ThumbnailCache thumbnailCache, List<VideoItem> videoItems){
+    public static List<MVideoItem> trans(List<VideoItem> videoItems){
         List<MVideoItem> mVideoItems = new ArrayList<>();
         MVideoItem mVideoItem;
         for(VideoItem item : videoItems){
             mVideoItem = new MVideoItem(item.getId(),item.getDisplayName(),item.getPath(),item.getDuration(),item.getSize());
-            String cachePath = thumbnailCache.getVideoThumbnailCachePath(item.getPath());
+            String cachePath = CacheEngine.getInstance().getVideoThumbnailCachePath(item.getPath());
             if(!TextUtils.isEmpty(cachePath)){
                 mVideoItem.setThumbnail(cachePath);
             }

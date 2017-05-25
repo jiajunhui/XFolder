@@ -5,7 +5,6 @@ import android.content.Intent;
 
 import com.jiajunhui.xapp.medialoader.filter.AudioFilter;
 import com.jiajunhui.xapp.medialoader.filter.VideoFilter;
-import com.kk.taurus.xfolder.bean.BaseItem;
 import com.kk.taurus.xfolder.bean.FileItem;
 import com.kk.taurus.xfolder.bean.MAudioItem;
 import com.kk.taurus.xfolder.bean.ScanAudioData;
@@ -15,7 +14,6 @@ import com.kk.taurus.xfolder.ui.activity.ScanTextActivity;
 import com.kk.taurus.xfolder.ui.activity.ScanVideoActivity;
 
 import java.io.File;
-import java.util.List;
 
 /**
  * Created by Taurus on 2017/5/8.
@@ -23,7 +21,7 @@ import java.util.List;
 
 public class IntentUtils {
 
-    public static Intent getIntent(Context context, List<BaseItem> items, FileItem item, int position){
+    public static Intent getIntent(Context context, FileItem item){
         Intent intent = null;
         if(new TextFileFilter().accept(new File(item.getPath()))){
             intent = new Intent(context,ScanTextActivity.class);
@@ -39,6 +37,32 @@ public class IntentUtils {
         }else if(new VideoFilter().accept(new File(item.getPath()))){
             intent = new Intent(context,ScanVideoActivity.class);
             intent.putExtra(ScanVideoActivity.KEY_SCAN_VIDEO_DATA,item);
+        }
+        return intent;
+    }
+
+    public static Intent getIntent(Context context, com.jiajunhui.xapp.medialoader.bean.FileItem item){
+        Intent intent = null;
+        if(new TextFileFilter().accept(new File(item.getPath()))){
+            intent = new Intent(context,ScanTextActivity.class);
+            FileItem fileItem = new FileItem();
+            fileItem.setName(item.getDisplayName());
+            fileItem.setPath(item.getPath());
+            intent.putExtra(ScanTextActivity.KEY_SCAN_TEXT_DATA,fileItem);
+        }else if(new AudioFilter().accept(new File(item.getPath()))){
+            ScanAudioData data = new ScanAudioData();
+            MAudioItem audioItem = new MAudioItem();
+            audioItem.setPath(item.getPath());
+            audioItem.setDisplayName(item.getDisplayName());
+            data.setAudioItem(audioItem);
+            intent = new Intent(context,ScanAudioActivity.class);
+            intent.putExtra(ScanAudioActivity.KEY_AUDIO_DATA,data);
+        }else if(new VideoFilter().accept(new File(item.getPath()))){
+            intent = new Intent(context,ScanVideoActivity.class);
+            FileItem fileItem = new FileItem();
+            fileItem.setName(item.getDisplayName());
+            fileItem.setPath(item.getPath());
+            intent.putExtra(ScanVideoActivity.KEY_SCAN_VIDEO_DATA,fileItem);
         }
         return intent;
     }

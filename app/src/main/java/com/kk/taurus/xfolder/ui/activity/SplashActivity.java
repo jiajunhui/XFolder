@@ -12,6 +12,7 @@ import android.view.View;
 import com.kk.taurus.baseframe.listener.DialogCallBack;
 import com.kk.taurus.baseframe.ui.activity.ToolsActivity;
 import com.kk.taurus.xfolder.R;
+import com.kk.taurus.xfolder.engine.SearchEngine;
 
 import kr.co.namee.permissiongen.PermissionFail;
 import kr.co.namee.permissiongen.PermissionGen;
@@ -57,6 +58,7 @@ public class SplashActivity extends ToolsActivity {
 
     @PermissionSuccess(requestCode = PERMISSION_STORAGE_REQUEST_CODE)
     public void onPermissionSuccess(){
+        SearchEngine.getInstance().initSearchEngine();
         Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
         onFinish();

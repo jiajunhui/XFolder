@@ -2,7 +2,7 @@ package com.kk.taurus.xfolder.bean;
 
 import com.jiajunhui.xapp.medialoader.bean.AudioItem;
 import com.kk.taurus.baseframe.base.HolderData;
-import com.kk.taurus.xfolder.config.ThumbnailCache;
+import com.kk.taurus.xfolder.engine.CacheEngine;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class AudioListData implements HolderData,Serializable {
         this.audioItems = audioItems;
     }
 
-    public static List<MAudioItem> trans(ThumbnailCache thumbnailCache,List<AudioItem> items){
+    public static List<MAudioItem> trans(List<AudioItem> items){
         List<MAudioItem> audioItems = new ArrayList<>();
         if(items!=null){
             MAudioItem audioItem;
@@ -34,7 +34,7 @@ public class AudioListData implements HolderData,Serializable {
                 audioItem.setDuration(item.getDuration());
                 audioItem.setPath(item.getPath());
                 audioItem.setSize(item.getSize());
-                String cachePath = thumbnailCache.getAudioCoverCachePath(item.getPath());
+                String cachePath = CacheEngine.getInstance().getAudioCoverCachePath(item.getPath());
                 audioItem.setAudioCover(cachePath);
                 audioItems.add(audioItem);
             }

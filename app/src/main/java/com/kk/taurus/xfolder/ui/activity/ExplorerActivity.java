@@ -11,7 +11,7 @@ import com.kk.taurus.baseframe.bean.PageState;
 import com.kk.taurus.baseframe.ui.activity.ToolBarActivity;
 import com.kk.taurus.filebase.engine.FileEngine;
 import com.kk.taurus.filebase.entity.Storage;
-import com.kk.taurus.filebase.utils.MimeUtils;
+import com.kk.taurus.filebase.utils.MIMEUtils;
 import com.kk.taurus.threadpool.TaskCallBack;
 import com.kk.taurus.xfolder.BuildConfig;
 import com.kk.taurus.xfolder.R;
@@ -104,14 +104,14 @@ public class ExplorerActivity extends ToolBarActivity<StackEntity,ExplorerHolder
             mContentHolder.setStateRecords(null);
             openFolder((FolderItem) item);
         }else{
-            Intent scanIntent = IntentUtils.getIntent(this, items, (FileItem) item, position);
+            Intent scanIntent = IntentUtils.getIntent(this, (FileItem) item);
             if(scanIntent!=null){
                 startActivity(scanIntent);
             }else{
                 try{
                     File file = new File(item.getPath());
                     Intent intent = new Intent(Intent.ACTION_VIEW);
-                    String type = MimeUtils.guessMimeTypeFromExtension(FileEngine.getExtFromFilename(file.getName()));
+                    String type = MIMEUtils.guessMimeTypeFromExtension(FileEngine.getExtFromFilename(file.getName()));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                         intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                         Uri contentUri = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".fileProvider", file);

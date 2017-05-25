@@ -1,4 +1,4 @@
-package com.kk.taurus.xfolder.config;
+package com.kk.taurus.xfolder.engine;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -8,8 +8,7 @@ import android.text.TextUtils;
 
 import com.jiajunhui.xapp.medialoader.utils.AudioCoverUtil;
 import com.jiajunhui.xapp.medialoader.utils.VideoThumbnailUtil;
-import com.kk.taurus.filebase.base.FileBase;
-import com.kk.taurus.filebase.base.IFileBase;
+import com.kk.taurus.baseframe.FrameApplication;
 import com.kk.taurus.filebase.engine.FileEngine;
 import com.kk.taurus.filebase.tools.MD5Utils;
 import com.kk.taurus.threadpool.TaskExecutor;
@@ -20,56 +19,38 @@ import java.io.File;
 import java.util.List;
 
 /**
- * Created by Taurus on 2017/5/20.
+ * Created by Taurus on 2017/5/25.
  */
 
-public class ThumbnailCache extends FileBase {
+public class CacheEngine {
 
-    private final String ROOT_DIR_NAME = ".bitmap_cache";
-    private final String VIDEO_THUMBNAIL_KIND_MINI = "video_thumbnail_kind_mini";
-    private final String AUDIO_COVER = "audio_cover";
-    private final String APK_ICON = "apk_icon";
+    private static CacheEngine instance;
+    private DirectoryDao mDirectoryDao;
 
-    public ThumbnailCache(Context context) {
-        super(context);
+    private CacheEngine(){
+        mDirectoryDao = new DirectoryDao(FrameApplication.getInstance().getApplicationContext());
     }
 
-    public File getVideoThumbnailMiniKind(){
-        return createDir(VIDEO_THUMBNAIL_KIND_MINI);
-    }
-
-    public File getAudioCoverDir(){
-        return createDir(AUDIO_COVER);
-    }
-
-    public File getApkIconDir(){
-        return createDir(APK_ICON);
-    }
-
-    @Override
-    public String getManageRootDirName() {
-        return ROOT_DIR_NAME;
-    }
-
-    @Override
-    public int getRootParentDirType() {
-        return IFileBase.MANAGE_PARENT_DIR_APP_CACHE_FILES;
-    }
-
-    @Override
-    public int getRootParentSpareDirType() {
-        return IFileBase.MANAGE_PARENT_DIR_APP_EXTERNAL_CACHE_FILES;
+    public static CacheEngine getInstance(){
+        if(null==instance){
+            synchronized (CacheEngine.class){
+                if(null==instance){
+                    instance = new CacheEngine();
+                }
+            }
+        }
+        return instance;
     }
 
     public String getApkIconPath(Context context, String path){
         String md5Name = MD5Utils.md5(path);
-        File file = new File(getApkIconDir(),md5Name);
+        File file = new File(mDirectoryDao.getApkIconDir(),md5Name);
         if(file.exists()){
             return file.getAbsolutePath();
         }else{
             Bitmap bitmap = FileEngine.getApkBitmap(context,path);
             if(bitmap!=null){
-                String cachePath = FileEngine.bitmapToFile(bitmap,getApkIconDir(),md5Name, Bitmap.CompressFormat.PNG);
+                String cachePath = FileEngine.bitmapToFile(bitmap, mDirectoryDao.getApkIconDir(),md5Name, Bitmap.CompressFormat.PNG);
                 if(!TextUtils.isEmpty(cachePath)){
                     return cachePath;
                 }
@@ -79,7 +60,7 @@ public class ThumbnailCache extends FileBase {
     }
 
     public String getVideoThumbnailCachePath(String itemPath){
-        File file = new File(getVideoThumbnailMiniKind(),MD5Utils.md5(itemPath));
+        File file = new File(mDirectoryDao.getVideoThumbnailMiniKind(),MD5Utils.md5(itemPath));
         if(file.exists()){
             return file.getAbsolutePath();
         }
@@ -87,7 +68,7 @@ public class ThumbnailCache extends FileBase {
     }
 
     public String getAudioCoverCachePath(String itemPath){
-        File file = new File(getAudioCoverDir(),MD5Utils.md5(itemPath));
+        File file = new File(mDirectoryDao.getAudioCoverDir(),MD5Utils.md5(itemPath));
         if(file.exists()){
             return file.getAbsolutePath();
         }
@@ -102,7 +83,7 @@ public class ThumbnailCache extends FileBase {
     public String getAudioCover(String path){
         Bitmap bitmap = AudioCoverUtil.createAlbumArt(path);
         if(bitmap!=null) {
-            String cache = FileEngine.bitmapToFile(bitmap, getAudioCoverDir(), MD5Utils.md5(path));
+            String cache = FileEngine.bitmapToFile(bitmap, mDirectoryDao.getAudioCoverDir(), MD5Utils.md5(path));
             if(bitmap!=null){
                 bitmap.recycle();
             }
@@ -165,7 +146,7 @@ public class ThumbnailCache extends FileBase {
                             }
                             bitmap = VideoThumbnailUtil.getVideoThumb(item.getPath(), MediaStore.Video.Thumbnails.MINI_KIND);
                             if(bitmap!=null){
-                                String path = FileEngine.bitmapToFile(bitmap, getVideoThumbnailMiniKind(),MD5Utils.md5(item.getPath()));
+                                String path = FileEngine.bitmapToFile(bitmap, mDirectoryDao.getVideoThumbnailMiniKind(),MD5Utils.md5(item.getPath()));
                                 if(!TextUtils.isEmpty(path)){
                                     item.setThumbnail(path);
                                     publishProgress(0);
@@ -207,4 +188,6 @@ public class ThumbnailCache extends FileBase {
     public interface OnAudioCoverListener {
         void onCoverFinish();
     }
+
+
 }

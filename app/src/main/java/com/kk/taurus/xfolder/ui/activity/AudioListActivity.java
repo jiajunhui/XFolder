@@ -11,7 +11,7 @@ import com.kk.taurus.baseframe.ui.activity.ToolBarActivity;
 import com.kk.taurus.xfolder.bean.AudioListData;
 import com.kk.taurus.xfolder.bean.MAudioItem;
 import com.kk.taurus.xfolder.bean.ScanAudioData;
-import com.kk.taurus.xfolder.config.ThumbnailCache;
+import com.kk.taurus.xfolder.engine.CacheEngine;
 import com.kk.taurus.xfolder.holder.AudioListHolder;
 
 /**
@@ -20,7 +20,6 @@ import com.kk.taurus.xfolder.holder.AudioListHolder;
 
 public class AudioListActivity extends ToolBarActivity<AudioListData,AudioListHolder> implements AudioListHolder.OnAudioListListener {
 
-    private ThumbnailCache thumbnailCache;
     private AsyncTask mTask;
 
     @Override
@@ -31,7 +30,6 @@ public class AudioListActivity extends ToolBarActivity<AudioListData,AudioListHo
     @Override
     public void initData() {
         super.initData();
-        thumbnailCache = new ThumbnailCache(this);
         mContentHolder.setOnAudioListListener(this);
         setToolBarTitle("音频");
     }
@@ -43,10 +41,10 @@ public class AudioListActivity extends ToolBarActivity<AudioListData,AudioListHo
             @Override
             public void onResult(AudioResult result) {
                 AudioListData data = new AudioListData();
-                data.setAudioItems(AudioListData.trans(thumbnailCache,result.getItems()));
+                data.setAudioItems(AudioListData.trans(result.getItems()));
                 setData(data);
                 setPageState(PageState.success());
-                mTask = thumbnailCache.generatorAudioCover(data.getAudioItems(), new ThumbnailCache.OnAudioCoverListener() {
+                mTask = CacheEngine.getInstance().generatorAudioCover(data.getAudioItems(), new CacheEngine.OnAudioCoverListener() {
                     @Override
                     public void onCoverFinish() {
                         mContentHolder.notifyDataChange();
