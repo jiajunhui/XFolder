@@ -64,6 +64,11 @@ public class FileListHolder extends ContentHolder<FileListData> implements Explo
         }
     }
 
+    @Override
+    public boolean onItemLongClick(RecyclerView.ViewHolder holder, int position) {
+        return false;
+    }
+
     public interface OnFileListListener{
         void onItemClick(List<BaseItem> items, BaseItem item, int position);
     }

@@ -7,10 +7,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.jiajunhui.xapp.medialoader.bean.BaseItem;
-import com.jiajunhui.xapp.medialoader.bean.FileItem;
 import com.kk.taurus.xfolder.R;
+import com.kk.taurus.xfolder.bean.BaseItem;
 import com.kk.taurus.xfolder.bean.DirectoryItem;
+import com.kk.taurus.xfolder.bean.FileItem;
 import com.kk.taurus.xfolder.callback.OnItemClickListener;
 import com.kk.taurus.xfolder.engine.CacheEngine;
 import com.kk.taurus.xfolder.engine.ImageDisplayEngine;
@@ -46,7 +46,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
     @Override
     public void onBindViewHolder(final SearchItemHolder holder, final int position) {
         BaseItem item = mItems.get(position);
-        holder.name.setText(item.getDisplayName());
+        holder.name.setText(item.getName());
         holder.arrow.setVisibility((item instanceof DirectoryItem)?View.VISIBLE:View.GONE);
         if(item instanceof FileItem){
             int resId = ExtensionUtils.getImageRes(item);

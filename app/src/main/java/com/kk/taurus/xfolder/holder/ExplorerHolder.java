@@ -33,6 +33,8 @@ public class ExplorerHolder extends ContentHolder<StackEntity> implements Explor
     private List<BaseItem> mItems = new ArrayList<>();
     private List<BaseItem> mEditItems = new ArrayList<>();
 
+    private boolean mEditState,mMoveState,mCopyState;
+
     private Storage storage;
     private StateRecord mCurrRecord;
     private OnExplorerListener onExplorerListener;
@@ -123,17 +125,49 @@ public class ExplorerHolder extends ContentHolder<StackEntity> implements Explor
     @Override
     public void onItemClick(RecyclerView.ViewHolder holder, int position) {
         BaseItem item = mItems.get(position);
-        StateRecord record = null;
-        if(item instanceof FolderItem){
-            record = new StateRecord();
-            record.setFocusPosition(position);
-            int firstVisiblePosition = getFirstVisiblePosition();
-            record.setScrollToPosition(firstVisiblePosition);
-            record.setOffset(getOffset(firstVisiblePosition));
+        if(mEditState){
+            item.setChecked(!item.isChecked());
+            if(item.isChecked() && !mEditItems.contains(item)){
+                mEditItems.add(item);
+            }else{
+                mEditItems.remove(item);
+            }
+            mAdapter.notifyDataSetChanged();
+        }else{
+            StateRecord record = null;
+            if(item instanceof FolderItem){
+                record = new StateRecord();
+                record.setFocusPosition(position);
+                int firstVisiblePosition = getFirstVisiblePosition();
+                record.setScrollToPosition(firstVisiblePosition);
+                record.setOffset(getOffset(firstVisiblePosition));
+            }
+            if(onExplorerListener!=null){
+                onExplorerListener.onItemClick(mItems,item,record,position);
+            }
         }
-        if(onExplorerListener!=null){
-            onExplorerListener.onItemClick(mItems,item,record,position);
+    }
+
+    public boolean isEditState(){
+        return mEditState;
+    }
+
+    public void endEditState(){
+        setEditState(false);
+    }
+
+    private void setEditState(boolean edit){
+        mEditState = edit;
+        mAdapter.setEditState(edit);
+    }
+
+    @Override
+    public boolean onItemLongClick(RecyclerView.ViewHolder holder, int position) {
+        if(!mEditState && !mMoveState && !mCopyState){
+            setEditState(true);
+            return true;
         }
+        return false;
     }
 
     public interface OnExplorerListener{

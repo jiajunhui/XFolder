@@ -24,6 +24,7 @@ import java.io.File;
 public class ScanTextHolder extends ContentHolder<ScanTextData> {
 
     private RelativeLayout mContainer;
+    private View mFileNotExist;
     private UIWebView mWebView;
     private ProgressBar mProgressBar;
 
@@ -35,6 +36,7 @@ public class ScanTextHolder extends ContentHolder<ScanTextData> {
     public void onCreate() {
         setContentView(R.layout.activity_scan_text);
         mContainer = getViewById(R.id.container);
+        mFileNotExist = getViewById(R.id.not_exist);
         mProgressBar = getViewById(R.id.progressBar);
         mWebView = new UIWebView(mContext);
         mContainer.addView(mWebView,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -60,7 +62,12 @@ public class ScanTextHolder extends ContentHolder<ScanTextData> {
         FileItem item = mData.getItem();
         String path = item.getPath();
         File file = new File(path);
+        if(!file.exists()){
+            mFileNotExist.setVisibility(View.VISIBLE);
+            return;
+        }
         if(!TextUtils.isEmpty(path)){
+            mFileNotExist.setVisibility(View.GONE);
             Uri uri = Uri.fromFile(file);
             String url = uri.toString();
             mWebView.loadUrl(url);

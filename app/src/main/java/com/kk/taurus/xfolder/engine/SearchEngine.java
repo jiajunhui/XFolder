@@ -1,13 +1,15 @@
 package com.kk.taurus.xfolder.engine;
 
+import android.database.Cursor;
 import android.os.AsyncTask;
+import android.provider.BaseColumns;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.Loader;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.jiajunhui.xapp.medialoader.MediaLoader;
-import com.jiajunhui.xapp.medialoader.bean.FileItem;
 import com.jiajunhui.xapp.medialoader.bean.FileResult;
 import com.jiajunhui.xapp.medialoader.callback.OnFileLoaderCallBack;
 import com.jiajunhui.xapp.medialoader.inter.OnRecursionListener;
@@ -18,6 +20,8 @@ import com.kk.taurus.filebase.engine.StorageEngine;
 import com.kk.taurus.filebase.entity.Storage;
 import com.kk.taurus.threadpool.TaskExecutor;
 import com.kk.taurus.xfolder.bean.DirectoryItem;
+import com.kk.taurus.xfolder.bean.FileItem;
+import com.kk.taurus.xfolder.config.SettingConfig;
 import com.kk.taurus.xfolder.filter.DirectoryFilter;
 import com.kk.taurus.xfolder.filter.NonDirectoryFilter;
 
@@ -30,6 +34,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.provider.MediaStore.Files.FileColumns.MIME_TYPE;
+
 /**
  * Created by Taurus on 2017/5/25.
  */
@@ -37,12 +43,14 @@ import java.util.List;
 public class SearchEngine {
 
     private final String TAG = "SearchEngine";
-    private final String SEARCH_DIRECTORY_INDEX_FILE_NAME = ".search_directory_index_record.txt";
-    private final String SEARCH_FILES_INDEX_FILE_NAME = ".search_files_index_record.txt";
+    private final String SEARCH_DIRECTORY_INDEX_FILE_NAME = ".search_directory_index_record";
+    private final String SEARCH_FILES_INDEX_FILE_NAME = ".search_files_index_record";
     private static SearchEngine instance;
 
     private boolean mSearchDirectoryEnable;
     private boolean mSearchFilesEnable;
+
+    private boolean mIgnoreCase;
 
     private final DirectoryDao mDirectoryDao;
 
@@ -115,11 +123,9 @@ public class SearchEngine {
                 copyTempDirectoryIndex();
                 return null;
             }
-
             @Override
             protected void onPostExecute(Integer integer) {
                 super.onPostExecute(integer);
-
             }
         },storageList);
     }
@@ -172,7 +178,6 @@ public class SearchEngine {
             @Override
             protected void onPostExecute(Integer integer) {
                 super.onPostExecute(integer);
-
             }
         },storageList);
     }
@@ -227,7 +232,12 @@ public class SearchEngine {
         return null;
     }
 
+    private String checkKeyCase(String key){
+        return mIgnoreCase?key.toLowerCase():key;
+    }
+
     private List<DirectoryItem> readSearchDirectoryRecord(String key){
+        key = checkKeyCase(key);
         File recordFile = new File(mDirectoryDao.getSearchIndexDir(),SEARCH_DIRECTORY_INDEX_FILE_NAME);
         if(recordFile.exists()){
             BufferedReader reader = null;
@@ -238,10 +248,11 @@ public class SearchEngine {
                 DirectoryItem item;
                 while ((line=reader.readLine())!=null){
                     String dirName = getNameByPath(line);
-                    if(dirName!=null && dirName.contains(key)){
+                    String compare = mIgnoreCase?(dirName==null?null:dirName.toLowerCase()):dirName;
+                    if(compare!=null && compare.contains(key)){
                         item = new DirectoryItem();
                         item.setPath(line);
-                        item.setDisplayName(dirName);
+                        item.setName(dirName);
                         result.add(item);
                     }
                 }
@@ -262,6 +273,7 @@ public class SearchEngine {
     }
 
     private List<FileItem> readSearchFileRecord(String key){
+        key = checkKeyCase(key);
         File recordFile = new File(mDirectoryDao.getSearchIndexDir(),SEARCH_FILES_INDEX_FILE_NAME);
         if(recordFile.exists()){
             BufferedReader reader = null;
@@ -272,10 +284,11 @@ public class SearchEngine {
                 FileItem item;
                 while ((line=reader.readLine())!=null){
                     String fileName = getNameByPath(line);
-                    if(fileName!=null && fileName.contains(key)){
+                    String compare = mIgnoreCase?(fileName==null?null:fileName.toLowerCase()):fileName;
+                    if(compare!=null && compare.contains(key)){
                         item = new FileItem();
                         item.setPath(line);
-                        item.setDisplayName(fileName);
+                        item.setName(fileName);
                         result.add(item);
                     }
                 }
@@ -306,22 +319,7 @@ public class SearchEngine {
     }
 
     public void search(FragmentActivity activity, final String key, final OnSearchListener onSearchListener){
-        MediaLoader.getLoader().loadFiles(activity, new OnFileLoaderCallBack() {
-            @Override
-            public void onResult(FileResult result) {
-                if(onSearchListener!=null){
-                    onSearchListener.onResult(result);
-                }
-            }
-            @Override
-            public String getSelections() {
-                return MediaStore.Files.FileColumns.DISPLAY_NAME + " like ? ";
-            }
-            @Override
-            public String[] getSelectionsArgs() {
-                return new String[]{"%"+key+"%"};
-            }
-        });
+        mIgnoreCase = SettingConfig.isSearchIgnoreCase(FrameApplication.getInstance().getApplicationContext());
         if(mSearchDirectoryEnable){
             invokeSearchDirectory(key, onSearchListener);
         }else{
@@ -335,13 +333,55 @@ public class SearchEngine {
         if(mSearchFilesEnable){
             invokeSearchFile(key, onSearchListener);
         }else{
-            setOnFileInitListener(new OnFileInitListener() {
-                @Override
-                public void onInitSuccess() {
-                    invokeSearchFile(key, onSearchListener);
-                }
-            });
+            mediaLoaderSearch(activity, key, onSearchListener);
+//            setOnFileInitListener(new OnFileInitListener() {
+//                @Override
+//                public void onInitSuccess() {
+//                    invokeSearchFile(key, onSearchListener);
+//                }
+//            });
         }
+    }
+
+    private void mediaLoaderSearch(FragmentActivity activity, final String key, final OnSearchListener onSearchListener) {
+        MediaLoader.getLoader().loadFiles(activity, new OnFileLoaderCallBack() {
+            @Override
+            public void onResult(FileResult result) {}
+            public void onResult(List<FileItem> fileItems) {
+                if(onSearchListener!=null){
+                    onSearchListener.onResult(fileItems);
+                }
+            }
+            @Override
+            public void onLoadFinish(Loader<Cursor> loader, Cursor data) {
+                List<FileItem> result = new ArrayList<>();
+                FileItem item;
+                while (data.moveToNext()) {
+                    item = new FileItem();
+                    int audioId = data.getInt(data.getColumnIndexOrThrow(BaseColumns._ID));
+                    String path = data.getString(data.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA));
+                    long size = data.getLong(data.getColumnIndexOrThrow(MediaStore.MediaColumns.SIZE));
+                    String name = data.getString(data.getColumnIndexOrThrow(MediaStore.MediaColumns.DISPLAY_NAME));
+                    String mime = data.getString(data.getColumnIndexOrThrow(MIME_TYPE));
+                    item.setId(audioId);
+                    item.setName(name);
+                    item.setPath(path);
+                    item.setSize(size);
+                    item.setMime(mime);
+                    result.add(item);
+                }
+                onResult(result);
+            }
+
+            @Override
+            public String getSelections() {
+                return MediaStore.Files.FileColumns.DISPLAY_NAME + " like ? ";
+            }
+            @Override
+            public String[] getSelectionsArgs() {
+                return new String[]{"%"+key+"%"};
+            }
+        });
     }
 
     private void invokeSearchDirectory(final String key, final OnSearchListener onSearchListener) {
@@ -387,7 +427,7 @@ public class SearchEngine {
     }
 
     public interface OnSearchListener{
-        void onResult(FileResult result);
+        void onResult(List<FileItem> fileItems);
         void onDirectoryResult(List<DirectoryItem> directoryItems);
         void onFileResult(List<FileItem> fileItems);
     }

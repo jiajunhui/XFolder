@@ -16,4 +16,19 @@
         android:progress="0"
         style="?android:attr/progressBarStyleHorizontal"/>
 
+    <RelativeLayout
+        android:id="@+id/not_exist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:textSize="15sp"
+            android:textColor="#ba151d"
+            android:text="@string/file_not_exist"/>
+    </RelativeLayout>
+
 </RelativeLayout>

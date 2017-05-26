@@ -7,6 +7,7 @@ package com.kk.taurus.xfolder.bean;
 public class FileItem extends BaseItem {
 
     private String extensionName;
+    private String mime;
     private long size;
 
     public String getExtensionName() {
@@ -15,6 +16,14 @@ public class FileItem extends BaseItem {
 
     public void setExtensionName(String extensionName) {
         this.extensionName = extensionName;
+    }
+
+    public String getMime() {
+        return mime;
+    }
+
+    public void setMime(String mime) {
+        this.mime = mime;
     }
 
     public long getSize() {

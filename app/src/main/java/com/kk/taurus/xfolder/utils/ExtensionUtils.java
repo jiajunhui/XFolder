@@ -67,21 +67,6 @@ public class ExtensionUtils {
         return R.mipmap.icon_unknow;
     }
 
-    public static int getImageRes(com.jiajunhui.xapp.medialoader.bean.BaseItem item){
-        if(item!=null){
-            if(item instanceof DirectoryItem){
-                return R.mipmap.icon_folder;
-            }
-            String extensionName = getExtension(item.getDisplayName());
-            Integer resId = mImageResMap.get(extensionName);
-            if(resId==null || resId==0){
-                return R.mipmap.icon_unknow;
-            }
-            return resId;
-        }
-        return R.mipmap.icon_unknow;
-    }
-
     public static String getExtension(String name){
         int i = name.lastIndexOf('.');
         if (i != -1) {

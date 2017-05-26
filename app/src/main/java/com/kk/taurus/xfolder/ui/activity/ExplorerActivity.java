@@ -34,6 +34,10 @@ import java.util.List;
 public class ExplorerActivity extends ToolBarActivity<StackEntity,ExplorerHolder> implements ExplorerHolder.OnExplorerListener {
 
     public static final String KEY_STORAGE_DATA = "storage_data";
+    public static final String KEY_INTENT_FROM = "intent_from";
+
+    public static final int INTENT_FROM_STORAGE = 0;
+    public static final int INTENT_FROM_SEARCH = 1;
 
     private Storage mStorage;
 
@@ -137,10 +141,10 @@ public class ExplorerActivity extends ToolBarActivity<StackEntity,ExplorerHolder
 
     @Override
     public void onBackPressed() {
-//        if(mContentHolder.isEdit()){
-//            mContentHolder.endEdit();
-//            return;
-//        }
+        if(mContentHolder.isEditState()){
+            mContentHolder.endEditState();
+            return;
+        }
         if(StackManager.getInstance().size()<=1){
             super.onBackPressed();
         }else{

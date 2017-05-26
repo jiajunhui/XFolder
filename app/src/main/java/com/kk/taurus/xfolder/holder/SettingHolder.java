@@ -26,7 +26,8 @@ public class SettingHolder extends ContentHolder<HolderData> {
     public static final String VIDEO_ASPECT_VALUE_4_3 = "video_aspect_4_3";
     public static final String VIDEO_ASPECT_VALUE_WRAP = "video_aspect_wrap";
 
-    private SwitchCompat mSwitchCompat;
+    private SwitchCompat mSwitchCompatHiddenFile;
+    private SwitchCompat mSwitchCompatIgnoreCase;
     private RadioGroup mRadioGroupVideoAspect;
 
     public SettingHolder(Context context) {
@@ -36,20 +37,18 @@ public class SettingHolder extends ContentHolder<HolderData> {
     @Override
     public void onCreate() {
         setContentView(R.layout.activity_setting);
-        mSwitchCompat = getViewById(R.id.switch_hidden_file);
+        mSwitchCompatHiddenFile = getViewById(R.id.switch_hidden_file);
+        mSwitchCompatIgnoreCase = getViewById(R.id.switch_ignore_case);
         mRadioGroupVideoAspect = getViewById(R.id.rg_video_aspect);
-        mSwitchCompat.setChecked(SettingConfig.isShowHiddenFiles(mContext));
+        mSwitchCompatHiddenFile.setChecked(SettingConfig.isShowHiddenFiles(mContext));
+        mSwitchCompatIgnoreCase.setChecked(SettingConfig.isSearchIgnoreCase(mContext));
     }
 
     @Override
     public void onHolderCreated(Bundle savedInstanceState) {
         super.onHolderCreated(savedInstanceState);
-        mSwitchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                SharedPrefer.getInstance().saveBoolean(mContext, SettingConfig.KEY_IS_SHOW_HIDDEN_FILES,compoundButton.isChecked());
-            }
-        });
+        mSwitchCompatHiddenFile.setOnCheckedChangeListener(mOnCheckedChangeListener);
+        mSwitchCompatIgnoreCase.setOnCheckedChangeListener(mOnCheckedChangeListener);
         String aspect = SharedPrefer.getInstance().getString(mContext,KEY_VIDEO_ASPECT,VIDEO_ASPECT_VALUE_FILL);
         settingConfig(aspect);
         mRadioGroupVideoAspect.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -59,6 +58,20 @@ public class SettingHolder extends ContentHolder<HolderData> {
             }
         });
     }
+
+    private CompoundButton.OnCheckedChangeListener mOnCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            switch (buttonView.getId()){
+                case R.id.switch_hidden_file:
+                    SharedPrefer.getInstance().saveBoolean(mContext, SettingConfig.KEY_IS_SHOW_HIDDEN_FILES,buttonView.isChecked());
+                    break;
+                case R.id.switch_ignore_case:
+                    SharedPrefer.getInstance().saveBoolean(mContext, SettingConfig.KEY_SEARCH_IGNORE_CASE,buttonView.isChecked());
+                    break;
+            }
+        }
+    };
 
     private void setRadioButtonCheck(int id, boolean checked, String value){
         RadioButton button = getViewById(id);

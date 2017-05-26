@@ -51,12 +51,12 @@ public class DirectoryDao extends FileBase {
 
     @Override
     public int getRootParentDirType() {
-        return IFileBase.MANAGE_PARENT_DIR_APP_EXTERNAL_CACHE_FILES;
+        return IFileBase.MANAGE_PARENT_DIR_APP_CACHE_FILES;
     }
 
     @Override
     public int getRootParentSpareDirType() {
-        return IFileBase.MANAGE_PARENT_DIR_APP_CACHE_FILES;
+        return IFileBase.MANAGE_PARENT_DIR_APP_EXTERNAL_CACHE_FILES;
     }
 
 }

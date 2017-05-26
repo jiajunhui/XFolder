@@ -11,9 +11,6 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.jiajunhui.xapp.medialoader.bean.BaseItem;
-import com.jiajunhui.xapp.medialoader.bean.FileItem;
-import com.jiajunhui.xapp.medialoader.bean.FileResult;
 import com.kk.taurus.baseframe.base.HolderData;
 import com.kk.taurus.baseframe.ui.activity.ToolBarActivity;
 import com.kk.taurus.filebase.engine.FileEngine;
@@ -21,7 +18,9 @@ import com.kk.taurus.filebase.entity.Storage;
 import com.kk.taurus.filebase.utils.MIMEUtils;
 import com.kk.taurus.xfolder.BuildConfig;
 import com.kk.taurus.xfolder.R;
+import com.kk.taurus.xfolder.bean.BaseItem;
 import com.kk.taurus.xfolder.bean.DirectoryItem;
+import com.kk.taurus.xfolder.bean.FileItem;
 import com.kk.taurus.xfolder.engine.SearchEngine;
 import com.kk.taurus.xfolder.holder.SearchHolder;
 import com.kk.taurus.xfolder.utils.IntentUtils;
@@ -36,6 +35,8 @@ import java.util.List;
 public class SearchActivity extends ToolBarActivity<HolderData,SearchHolder> implements SearchView.OnQueryTextListener, SearchHolder.OnSearchListener {
 
     private SearchView mSearchView;
+
+    private int mSearchFinishCounter;
 
     @Override
     public SearchHolder getContentViewHolder(Bundle savedInstanceState) {
@@ -63,14 +64,15 @@ public class SearchActivity extends ToolBarActivity<HolderData,SearchHolder> imp
         if(TextUtils.isEmpty(query))
             return true;
         mContentHolder.cleanResult();
+        mSearchFinishCounter = 0;
         SearchEngine.getInstance().search(this, query, new SearchEngine.OnSearchListener() {
             @Override
-            public void onResult(FileResult result) {
+            public void onResult(List<FileItem> fileItems) {
                 closeKeyCode(SearchActivity.this);
-                if(result!=null){
-                    List<FileItem> fileItems = result.getItems();
+                if(fileItems!=null){
                     mContentHolder.onResult(fileItems);
                 }
+                increaseJudge();
             }
             @Override
             public void onDirectoryResult(List<DirectoryItem> directoryItems) {
@@ -78,6 +80,7 @@ public class SearchActivity extends ToolBarActivity<HolderData,SearchHolder> imp
                 if(directoryItems!=null){
                     mContentHolder.onResultDirectory(directoryItems);
                 }
+                increaseJudge();
             }
             @Override
             public void onFileResult(List<FileItem> fileItems) {
@@ -85,9 +88,17 @@ public class SearchActivity extends ToolBarActivity<HolderData,SearchHolder> imp
                 if(fileItems!=null){
                     mContentHolder.onResultFile(fileItems);
                 }
+                increaseJudge();
             }
         });
         return true;
+    }
+
+    private void increaseJudge(){
+        mSearchFinishCounter++;
+        if(mSearchFinishCounter>=2){
+            mContentHolder.onSearchFinish();
+        }
     }
 
     @Override
@@ -100,9 +111,10 @@ public class SearchActivity extends ToolBarActivity<HolderData,SearchHolder> imp
         if(item instanceof DirectoryItem){
             Storage storage = new Storage();
             storage.setPath(item.getPath());
-            storage.setDescription(item.getDisplayName());
+            storage.setDescription(item.getName());
             Bundle bundle = new Bundle();
             bundle.putSerializable(ExplorerActivity.KEY_STORAGE_DATA,storage);
+            bundle.putInt(ExplorerActivity.KEY_INTENT_FROM,ExplorerActivity.INTENT_FROM_SEARCH);
             intentTo(ExplorerActivity.class,bundle);
         }else{
             Intent scanIntent = IntentUtils.getIntent(this, (FileItem)item);

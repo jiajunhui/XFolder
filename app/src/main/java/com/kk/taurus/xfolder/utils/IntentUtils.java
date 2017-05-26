@@ -41,30 +41,4 @@ public class IntentUtils {
         return intent;
     }
 
-    public static Intent getIntent(Context context, com.jiajunhui.xapp.medialoader.bean.FileItem item){
-        Intent intent = null;
-        if(new TextFileFilter().accept(new File(item.getPath()))){
-            intent = new Intent(context,ScanTextActivity.class);
-            FileItem fileItem = new FileItem();
-            fileItem.setName(item.getDisplayName());
-            fileItem.setPath(item.getPath());
-            intent.putExtra(ScanTextActivity.KEY_SCAN_TEXT_DATA,fileItem);
-        }else if(new AudioFilter().accept(new File(item.getPath()))){
-            ScanAudioData data = new ScanAudioData();
-            MAudioItem audioItem = new MAudioItem();
-            audioItem.setPath(item.getPath());
-            audioItem.setDisplayName(item.getDisplayName());
-            data.setAudioItem(audioItem);
-            intent = new Intent(context,ScanAudioActivity.class);
-            intent.putExtra(ScanAudioActivity.KEY_AUDIO_DATA,data);
-        }else if(new VideoFilter().accept(new File(item.getPath()))){
-            intent = new Intent(context,ScanVideoActivity.class);
-            FileItem fileItem = new FileItem();
-            fileItem.setName(item.getDisplayName());
-            fileItem.setPath(item.getPath());
-            intent.putExtra(ScanVideoActivity.KEY_SCAN_VIDEO_DATA,fileItem);
-        }
-        return intent;
-    }
-
 }

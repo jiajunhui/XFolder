@@ -22,6 +22,8 @@ public class SettingConfig {
     public static final String KEY_IS_SHOW_HIDDEN_FILES = "is_show_hidden_files";
     public static final String KEY_FILES_SORT_TYPE = "sort_type";
 
+    public static final String KEY_SEARCH_IGNORE_CASE = "ignore_case";
+
     private static final int SORT_TYPE_DIRECTORY_FIRST = 1001;
     private static final int SORT_TYPE_FILE_FIRST = 1002;
     public static final int SORT_TYPE_NAME_A_Z = 1003;
@@ -31,6 +33,10 @@ public class SettingConfig {
 
     public static boolean isShowHiddenFiles(Context context){
         return SharedPrefer.getInstance().getBoolean(context,KEY_IS_SHOW_HIDDEN_FILES,false);
+    }
+
+    public static boolean isSearchIgnoreCase(Context context){
+        return SharedPrefer.getInstance().getBoolean(context,KEY_SEARCH_IGNORE_CASE,false);
     }
 
     public static FileFilter getFileFilter(){

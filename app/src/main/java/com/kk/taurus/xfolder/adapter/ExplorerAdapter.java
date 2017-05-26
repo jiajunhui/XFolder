@@ -28,9 +28,15 @@ public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.ItemHo
     private Context mContext;
     private List<BaseItem> mItems = new ArrayList<>();
     private OnItemListener onItemListener;
+    private boolean mEditState;
 
     public void setOnItemListener(OnItemListener onItemListener) {
         this.onItemListener = onItemListener;
+    }
+
+    public void setEditState(boolean edit) {
+        this.mEditState = edit;
+        notifyDataSetChanged();
     }
 
     public ExplorerAdapter(Context context, List<BaseItem> items){
@@ -56,18 +62,30 @@ public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.ItemHo
         }else{
             holder.icon.setImageResource(resId);
         }
-        if(item instanceof FolderItem){
+        if(mEditState){
             holder.arrow.setVisibility(View.VISIBLE);
-            holder.info.setText(getFolderInfo((FolderItem) item));
+            holder.arrow.setImageResource(item.isChecked()?R.mipmap.icon_edit_checked:R.mipmap.icon_edit_unchecked);
         }else{
-            holder.arrow.setVisibility(View.GONE);
-            holder.info.setText(getFileInfo((FileItem) item));
+            item.setChecked(false);
+            holder.arrow.setVisibility((item instanceof FolderItem)?View.VISIBLE:View.GONE);
+            if(item instanceof FolderItem){
+                holder.arrow.setImageResource(R.mipmap.icon_arrow);
+                holder.info.setText(getFolderInfo((FolderItem) item));
+            }else{
+                holder.info.setText(getFileInfo((FileItem) item));
+            }
         }
         if(onItemListener !=null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     onItemListener.onItemClick(holder, position);
+                }
+            });
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    return onItemListener.onItemLongClick(holder,position);
                 }
             });
         }
@@ -104,6 +122,7 @@ public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.ItemHo
 
     public interface OnItemListener {
         void onItemClick(RecyclerView.ViewHolder holder, int position);
+        boolean onItemLongClick(RecyclerView.ViewHolder holder, int position);
     }
 
 }
