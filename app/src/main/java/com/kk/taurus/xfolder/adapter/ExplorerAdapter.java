@@ -42,6 +42,12 @@ public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.ItemHo
     public ExplorerAdapter(Context context, List<BaseItem> items){
         this.mContext = context;
         this.mItems = items;
+        setHasStableIds(true);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position + 1;
     }
 
     @Override
@@ -64,7 +70,7 @@ public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.ItemHo
         }
         if(mEditState){
             holder.arrow.setVisibility(View.VISIBLE);
-            holder.arrow.setImageResource(item.isChecked()?R.mipmap.icon_edit_checked:R.mipmap.icon_edit_unchecked);
+            setItemChecked(holder,item.isChecked());
         }else{
             item.setChecked(false);
             holder.arrow.setVisibility((item instanceof FolderItem)?View.VISIBLE:View.GONE);
@@ -91,6 +97,10 @@ public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.ItemHo
         }
     }
 
+    public void setItemChecked(ItemHolder holder, boolean checked){
+        holder.arrow.setImageResource(checked?R.mipmap.icon_edit_checked:R.mipmap.icon_edit_unchecked);
+    }
+
     private String getFolderInfo(FolderItem item){
         return String.format(mContext.getString(R.string.folder_info),item.getDirNumber(),item.getFileNumber());
     }
@@ -106,10 +116,10 @@ public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.ItemHo
 
     public static class ItemHolder extends RecyclerView.ViewHolder{
 
-        ImageView icon;
-        ImageView arrow;
-        TextView name;
-        TextView info;
+        public ImageView icon;
+        public ImageView arrow;
+        public TextView name;
+        public TextView info;
 
         public ItemHolder(View itemView) {
             super(itemView);

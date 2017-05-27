@@ -154,7 +154,7 @@ public class ExplorerHolder extends ContentHolder<StackEntity> implements Explor
             }else{
                 mEditItems.remove(item);
             }
-            mAdapter.notifyDataSetChanged();
+            updateItemChecked(item.isChecked(),position);
             onEditItemChange();
         }else{
             StateRecord record = null;
@@ -169,6 +169,11 @@ public class ExplorerHolder extends ContentHolder<StackEntity> implements Explor
                 onExplorerListener.onItemClick(mItems,item,record,position);
             }
         }
+    }
+
+    private void updateItemChecked(boolean checked, int position) {
+        RecyclerView.ViewHolder holder = mRecycler.findViewHolderForItemId(mAdapter.getItemId(position));
+        mAdapter.setItemChecked((ExplorerAdapter.ItemHolder) holder,checked);
     }
 
     private void onEditItemChange() {
