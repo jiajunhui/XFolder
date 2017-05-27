@@ -2,6 +2,7 @@ package com.kk.taurus.xfolder.holder;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,6 +17,7 @@ import com.kk.taurus.xfolder.bean.BaseItem;
 import com.kk.taurus.xfolder.bean.FolderItem;
 import com.kk.taurus.xfolder.bean.StackEntity;
 import com.kk.taurus.xfolder.bean.StateRecord;
+import com.kk.taurus.xfolder.engine.FileEditEngine;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +31,8 @@ public class ExplorerHolder extends ContentHolder<StackEntity> implements Explor
     private TextView mTvPath;
     private TextView mTvNullTip;
     private RecyclerView mRecycler;
+    private FloatingActionButton mFabDelete;
+
     private ExplorerAdapter mAdapter;
     private List<BaseItem> mItems = new ArrayList<>();
     private List<BaseItem> mEditItems = new ArrayList<>();
@@ -50,12 +54,27 @@ public class ExplorerHolder extends ContentHolder<StackEntity> implements Explor
         mTvPath = getViewById(R.id.tv_curr_path);
         mTvNullTip = getViewById(R.id.tv_null_tip);
         mRecycler = getViewById(R.id.recycler);
+        mFabDelete = getViewById(R.id.fab_delete);
+        mFabDelete.setOnClickListener(this);
     }
 
     @Override
     public void onHolderCreated(Bundle savedInstanceState) {
         super.onHolderCreated(savedInstanceState);
         mRecycler.setLayoutManager(new LinearLayoutManager(mContext,LinearLayoutManager.VERTICAL,false));
+        mRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if(mCurrRecord==null)
+                    return;
+                if(newState==RecyclerView.SCROLL_STATE_IDLE){
+                    int position = getFirstVisiblePosition();
+                    mCurrRecord.setScrollToPosition(position);
+                    mCurrRecord.setOffset(getOffset(position));
+                }
+            }
+        });
         mAdapter = new ExplorerAdapter(mContext,mItems);
         mAdapter.setOnItemListener(this);
         mRecycler.setAdapter(mAdapter);
@@ -100,6 +119,9 @@ public class ExplorerHolder extends ContentHolder<StackEntity> implements Explor
     }
 
     public void setStateRecords(StateRecord record){
+        if(record==null){
+            record = new StateRecord();
+        }
         this.mCurrRecord = record;
         mRecycler.stopScroll();
     }
@@ -133,6 +155,7 @@ public class ExplorerHolder extends ContentHolder<StackEntity> implements Explor
                 mEditItems.remove(item);
             }
             mAdapter.notifyDataSetChanged();
+            onEditItemChange();
         }else{
             StateRecord record = null;
             if(item instanceof FolderItem){
@@ -145,6 +168,35 @@ public class ExplorerHolder extends ContentHolder<StackEntity> implements Explor
             if(onExplorerListener!=null){
                 onExplorerListener.onItemClick(mItems,item,record,position);
             }
+        }
+    }
+
+    private void onEditItemChange() {
+        if(mEditState && mEditItems.size()>0){
+            mFabDelete.setVisibility(View.VISIBLE);
+        }else{
+            mFabDelete.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        super.onClick(v);
+        switch (v.getId()){
+            case R.id.fab_delete:
+                requestDelete();
+                break;
+        }
+    }
+
+    private void requestDelete(){
+        if(onExplorerListener!=null){
+            onExplorerListener.onRequestDelete(mEditItems, new FileEditEngine.OnDeleteCallBack() {
+                @Override
+                public void onFinish(int code) {
+
+                }
+            });
         }
     }
 
@@ -172,5 +224,6 @@ public class ExplorerHolder extends ContentHolder<StackEntity> implements Explor
 
     public interface OnExplorerListener{
         void onItemClick(List<BaseItem> items, BaseItem item, StateRecord record, int position);
+        void onRequestDelete(List<BaseItem> items, FileEditEngine.OnDeleteCallBack onDeleteCallBack);
     }
 }

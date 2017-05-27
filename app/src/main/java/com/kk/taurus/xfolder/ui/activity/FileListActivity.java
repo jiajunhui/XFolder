@@ -12,7 +12,6 @@ import com.jiajunhui.xapp.medialoader.bean.FileResult;
 import com.jiajunhui.xapp.medialoader.bean.FileType;
 import com.jiajunhui.xapp.medialoader.callback.OnFileLoaderCallBack;
 import com.kk.taurus.baseframe.bean.PageState;
-import com.kk.taurus.baseframe.ui.activity.ToolBarActivity;
 import com.kk.taurus.filebase.engine.FileEngine;
 import com.kk.taurus.filebase.utils.MIMEUtils;
 import com.kk.taurus.xfolder.BuildConfig;
@@ -30,7 +29,7 @@ import java.util.List;
  * Created by Taurus on 2017/5/24.
  */
 
-public class FileListActivity extends ToolBarActivity<FileListData,FileListHolder> implements FileListHolder.OnFileListListener {
+public class FileListActivity extends BaseProjectActivity<FileListData,FileListHolder> implements FileListHolder.OnFileListListener {
 
     public static final String KEY_FILE_LIST_DATA = "file_list_data";
 

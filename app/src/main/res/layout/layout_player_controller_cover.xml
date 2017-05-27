@@ -95,7 +95,7 @@
             android:minHeight="5dp"
             android:focusable="false"
             android:splitTrack="false"
-            android:progressDrawable="@drawable/style_video_player_video_seekbar"
+            android:progressDrawable="@drawable/selector_scan_image_seekbar"
             android:thumb="@drawable/selector_seek_bar_thumb"/>
         <TextView
             android:id="@id/cover_player_controller_text_view_total_time"

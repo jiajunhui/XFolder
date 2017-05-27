@@ -13,4 +13,12 @@
     <string name="search_result_null">您要找的文件可能在火星</string>
     <string name="file_not_exist">~文件不翼而飞~</string>
 
+
+    <string name="explorer_menu_item_title_name_asc">按名称升序(a-z)</string>
+    <string name="explorer_menu_item_title_name_desc">按名称升序(z-a)</string>
+    <string name="explorer_menu_item_title_date_asc">按时间升序</string>
+    <string name="explorer_menu_item_title_date_desc">按时间降序</string>
+    <string name="explorer_menu_item_title_dir_first">目录优先</string>
+    <string name="explorer_menu_item_title_file_first">文件优先</string>
+
 </resources>

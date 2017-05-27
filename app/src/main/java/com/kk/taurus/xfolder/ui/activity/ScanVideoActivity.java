@@ -3,7 +3,7 @@ package com.kk.taurus.xfolder.ui.activity;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
-import com.kk.taurus.baseframe.ui.activity.ToolBarActivity;
+import com.kk.taurus.xfolder.R;
 import com.kk.taurus.xfolder.bean.FileItem;
 import com.kk.taurus.xfolder.bean.ScanVideoData;
 import com.kk.taurus.xfolder.holder.ScanVideoHolder;
@@ -12,7 +12,7 @@ import com.kk.taurus.xfolder.holder.ScanVideoHolder;
  * Created by Taurus on 2017/5/18.
  */
 
-public class ScanVideoActivity extends ToolBarActivity<ScanVideoData,ScanVideoHolder> implements ScanVideoHolder.OnScanVideoListener {
+public class ScanVideoActivity extends BaseProjectActivity<ScanVideoData,ScanVideoHolder> implements ScanVideoHolder.OnScanVideoListener {
 
     public static final String KEY_SCAN_VIDEO_DATA = "video_data";
     private boolean isLandscape;
@@ -25,6 +25,7 @@ public class ScanVideoActivity extends ToolBarActivity<ScanVideoData,ScanVideoHo
     @Override
     public void initData() {
         super.initData();
+        getWindow().setNavigationBarColor(getResources().getColor(R.color.scan_video_colorPrimary));
         mContentHolder.setOnScanVideoListener(this);
     }
 

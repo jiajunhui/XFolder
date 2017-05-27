@@ -3,22 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/name_asc"
-        android:title="名称升序"
+        android:title="@string/explorer_menu_item_title_name_asc"
         app:showAsAction="collapseActionView"
         />
     <item
         android:id="@+id/name_desc"
-        android:title="名称降序"
+        android:title="@string/explorer_menu_item_title_name_desc"
         app:showAsAction="collapseActionView"
         />
     <item
         android:id="@+id/time_asc"
-        android:title="时间升序"
+        android:title="@string/explorer_menu_item_title_date_asc"
         app:showAsAction="collapseActionView"
         />
     <item
         android:id="@+id/time_desc"
-        android:title="时间降序"
+        android:title="@string/explorer_menu_item_title_date_desc"
+        app:showAsAction="collapseActionView"
+        />
+    <item
+        android:id="@+id/dir_or_file_first"
+        android:title="@string/explorer_menu_item_title_file_first"
         app:showAsAction="collapseActionView"
         />
 </menu>

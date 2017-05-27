@@ -87,6 +87,7 @@ public class SearchEngine {
         if(storageList!=null){
             mSearchDirectoryEnable = existDirectoryIndex()!=null;
             mSearchFilesEnable = existFilesIndex()!=null;
+            cancelTask();
             initDirectoryIndex(storageList);
             initFileIndex(storageList);
         }
@@ -95,6 +96,15 @@ public class SearchEngine {
     private void initDirectoryIndex(List<Storage> storageList) {
         //init directory index
         mInitDirectoryTask = TaskExecutor.executeConcurrently(new AsyncTask<List<Storage>, Integer, Integer>() {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                File temp = new File(mDirectoryDao.getTemp(),SEARCH_DIRECTORY_INDEX_FILE_NAME);
+                if(temp.exists()){
+                    temp.delete();
+                }
+            }
+
             @Override
             protected Integer doInBackground(List<Storage>... params) {
                 for(Storage storage : params[0]){
@@ -147,6 +157,15 @@ public class SearchEngine {
     private void initFileIndex(List<Storage> storageList) {
         //init file index
         mInitFileIndexTask = TaskExecutor.executeConcurrently(new AsyncTask<List<Storage>, Integer, Integer>() {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                File temp = new File(mDirectoryDao.getTemp(),SEARCH_FILES_INDEX_FILE_NAME);
+                if(temp.exists()){
+                    temp.delete();
+                }
+            }
+
             @Override
             protected Integer doInBackground(List<Storage>... params) {
                 for(Storage storage : params[0]){

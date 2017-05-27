@@ -74,7 +74,7 @@ public class StorageVolumeManager {
     }
 
     public int[] getNumbers(String dirPath){
-        List<File> files = listFiles(new File(dirPath));
+        List<File> files = listFilesNoSort(new File(dirPath));
         int[] numbers = new int[2];
         for(File file : files){
             if(file.isDirectory()){
@@ -106,6 +106,10 @@ public class StorageVolumeManager {
                 e.printStackTrace();
             }
         }
+    }
+
+    private List<File> listFilesNoSort(File dir){
+        return FileEngine.listFiles(dir, null, null);
     }
 
     private List<File> listFiles(File dir){

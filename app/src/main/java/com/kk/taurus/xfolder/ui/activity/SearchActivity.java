@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.kk.taurus.baseframe.base.HolderData;
-import com.kk.taurus.baseframe.ui.activity.ToolBarActivity;
 import com.kk.taurus.filebase.engine.FileEngine;
 import com.kk.taurus.filebase.entity.Storage;
 import com.kk.taurus.filebase.utils.MIMEUtils;
@@ -32,7 +31,7 @@ import java.util.List;
  * Created by Taurus on 2017/5/22.
  */
 
-public class SearchActivity extends ToolBarActivity<HolderData,SearchHolder> implements SearchView.OnQueryTextListener, SearchHolder.OnSearchListener {
+public class SearchActivity extends BaseProjectActivity<HolderData,SearchHolder> implements SearchView.OnQueryTextListener, SearchHolder.OnSearchListener {
 
     private SearchView mSearchView;
 

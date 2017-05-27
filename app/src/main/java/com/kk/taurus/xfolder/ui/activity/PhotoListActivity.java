@@ -7,7 +7,6 @@ import com.jiajunhui.xapp.medialoader.bean.PhotoFolder;
 import com.jiajunhui.xapp.medialoader.bean.PhotoResult;
 import com.jiajunhui.xapp.medialoader.callback.OnPhotoLoaderCallBack;
 import com.kk.taurus.baseframe.bean.PageState;
-import com.kk.taurus.baseframe.ui.activity.ToolBarActivity;
 import com.kk.taurus.xfolder.bean.PhotoData;
 import com.kk.taurus.xfolder.bean.PhotoDataHelper;
 import com.kk.taurus.xfolder.bean.PhotoFolderData;
@@ -18,7 +17,7 @@ import com.kk.taurus.xfolder.holder.PhotoListHolder;
  * Created by Taurus on 2017/5/19.
  */
 
-public class PhotoListActivity extends ToolBarActivity<PhotoData,PhotoListHolder> {
+public class PhotoListActivity extends BaseProjectActivity<PhotoData,PhotoListHolder> {
 
     @Override
     public PhotoListHolder getContentViewHolder(Bundle savedInstanceState) {

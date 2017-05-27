@@ -7,7 +7,6 @@ import com.jiajunhui.xapp.medialoader.MediaLoader;
 import com.jiajunhui.xapp.medialoader.bean.VideoResult;
 import com.jiajunhui.xapp.medialoader.callback.OnVideoLoaderCallBack;
 import com.kk.taurus.baseframe.bean.PageState;
-import com.kk.taurus.baseframe.ui.activity.ToolBarActivity;
 import com.kk.taurus.xfolder.bean.FileItem;
 import com.kk.taurus.xfolder.bean.MVideoItem;
 import com.kk.taurus.xfolder.bean.VideoListData;
@@ -20,7 +19,7 @@ import java.util.List;
  * Created by Taurus on 2017/5/19.
  */
 
-public class VideoListActivity extends ToolBarActivity<VideoListData,VideoListHolder> implements VideoListHolder.OnVideoListListener {
+public class VideoListActivity extends BaseProjectActivity<VideoListData,VideoListHolder> implements VideoListHolder.OnVideoListListener {
 
     private AsyncTask mTask;
 

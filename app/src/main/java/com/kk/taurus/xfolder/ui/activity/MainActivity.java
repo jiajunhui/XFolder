@@ -19,18 +19,18 @@ import com.jiajunhui.xapp.medialoader.callback.OnFileLoaderCallBack;
 import com.jiajunhui.xapp.medialoader.callback.OnPhotoLoaderCallBack;
 import com.jiajunhui.xapp.medialoader.callback.OnVideoLoaderCallBack;
 import com.kk.taurus.baseframe.bean.PageState;
-import com.kk.taurus.baseframe.ui.activity.ToolBarActivity;
 import com.kk.taurus.filebase.engine.StorageEngine;
 import com.kk.taurus.filebase.entity.Storage;
 import com.kk.taurus.xfolder.R;
 import com.kk.taurus.xfolder.bean.FileListData;
 import com.kk.taurus.xfolder.bean.MainHolderData;
 import com.kk.taurus.xfolder.bean.MediaEntity;
+import com.kk.taurus.xfolder.engine.SearchEngine;
 import com.kk.taurus.xfolder.holder.MainHolder;
 
 import java.util.List;
 
-public class MainActivity extends ToolBarActivity<MainHolderData,MainHolder> implements MainHolder.OnMainListener {
+public class MainActivity extends BaseProjectActivity<MainHolderData,MainHolder> implements MainHolder.OnMainListener {
 
     @Override
     public MainHolder getContentViewHolder(Bundle savedInstanceState) {
@@ -176,5 +176,11 @@ public class MainActivity extends ToolBarActivity<MainHolderData,MainHolder> imp
         Bundle bundle = new Bundle();
         bundle.putSerializable(FileListActivity.KEY_FILE_LIST_DATA,data);
         intentTo(FileListActivity.class,bundle);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SearchEngine.getInstance().cancelTask();
     }
 }

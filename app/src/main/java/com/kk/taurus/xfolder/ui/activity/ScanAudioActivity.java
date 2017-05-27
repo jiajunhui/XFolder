@@ -3,7 +3,7 @@ package com.kk.taurus.xfolder.ui.activity;
 import android.os.Bundle;
 
 import com.kk.taurus.baseframe.bean.PageState;
-import com.kk.taurus.baseframe.ui.activity.ToolBarActivity;
+import com.kk.taurus.xfolder.R;
 import com.kk.taurus.xfolder.bean.MAudioItem;
 import com.kk.taurus.xfolder.bean.ScanAudioData;
 import com.kk.taurus.xfolder.holder.ScanAudioHolder;
@@ -12,7 +12,7 @@ import com.kk.taurus.xfolder.holder.ScanAudioHolder;
  * Created by Taurus on 2017/5/19.
  */
 
-public class ScanAudioActivity extends ToolBarActivity<ScanAudioData,ScanAudioHolder> {
+public class ScanAudioActivity extends BaseProjectActivity<ScanAudioData,ScanAudioHolder> {
 
     public static final String KEY_AUDIO_DATA = "audio_data";
 
@@ -24,6 +24,7 @@ public class ScanAudioActivity extends ToolBarActivity<ScanAudioData,ScanAudioHo
     @Override
     public void initData() {
         super.initData();
+        getWindow().setNavigationBarColor(getResources().getColor(R.color.scan_audio_colorPrimary));
         setElevation(0f);
     }
 

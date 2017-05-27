@@ -7,7 +7,6 @@ import com.jiajunhui.xapp.medialoader.MediaLoader;
 import com.jiajunhui.xapp.medialoader.bean.AudioResult;
 import com.jiajunhui.xapp.medialoader.callback.OnAudioLoaderCallBack;
 import com.kk.taurus.baseframe.bean.PageState;
-import com.kk.taurus.baseframe.ui.activity.ToolBarActivity;
 import com.kk.taurus.xfolder.bean.AudioListData;
 import com.kk.taurus.xfolder.bean.MAudioItem;
 import com.kk.taurus.xfolder.bean.ScanAudioData;
@@ -18,7 +17,7 @@ import com.kk.taurus.xfolder.holder.AudioListHolder;
  * Created by Taurus on 2017/5/19.
  */
 
-public class AudioListActivity extends ToolBarActivity<AudioListData,AudioListHolder> implements AudioListHolder.OnAudioListListener {
+public class AudioListActivity extends BaseProjectActivity<AudioListData,AudioListHolder> implements AudioListHolder.OnAudioListListener {
 
     private AsyncTask mTask;
 
