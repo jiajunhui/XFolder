@@ -43,12 +43,12 @@ public class AudioListActivity extends BaseProjectActivity<AudioListData,AudioLi
                 data.setAudioItems(AudioListData.trans(result.getItems()));
                 setData(data);
                 setPageState(PageState.success());
-                mTask = CacheEngine.getInstance().generatorAudioCover(data.getAudioItems(), new CacheEngine.OnAudioCoverListener() {
-                    @Override
-                    public void onCoverFinish() {
-                        mContentHolder.notifyDataChange();
-                    }
-                });
+//                mTask = CacheEngine.getInstance().generatorAudioCover(data.getAudioItems(), new CacheEngine.OnAudioCoverListener() {
+//                    @Override
+//                    public void onCoverFinish() {
+//                        mContentHolder.notifyDataChange();
+//                    }
+//                });
             }
         });
     }

@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.jiajunhui.xapp.medialoader.bean.VideoItem;
 import com.kk.taurus.filebase.tools.BytesTool;
+import com.kk.taurus.imagedisplay.ImageDisplay;
+import com.kk.taurus.imagedisplay.entity.ThumbnailType;
 import com.kk.taurus.playerbase.utils.TimeUtil;
 import com.kk.taurus.xfolder.R;
 import com.kk.taurus.xfolder.bean.MVideoItem;
@@ -46,7 +48,8 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.Vide
         MVideoItem item = videoItems.get(position);
         holder.name.setText(item.getDisplayName());
         holder.info.setText(getVideoInfo(item));
-        ImageDisplayEngine.display(mContext,holder.icon,item.getThumbnail(),R.mipmap.icon_video);
+//        ImageDisplayEngine.display(mContext,holder.icon,item.getThumbnail(),R.mipmap.icon_video);
+        ImageDisplay.disPlayThumbnail(mContext,holder.icon,item.getPath(),R.mipmap.icon_video, ThumbnailType.VIDEO_MINI_KIND);
         if(mOnItemClickListener!=null){
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -46,12 +46,12 @@ public class VideoListActivity extends BaseProjectActivity<VideoListData,VideoLi
                 data.setVideoItems(videoItems);
                 setData(data);
                 setPageState(PageState.success());
-                mTask = CacheEngine.getInstance().generatorThumbnail(videoItems, new CacheEngine.OnVideoThumbnailListener() {
-                    @Override
-                    public void onThumbnailFinish() {
-                        mContentHolder.notifyDataChange();
-                    }
-                });
+//                mTask = CacheEngine.getInstance().generatorThumbnail(videoItems, new CacheEngine.OnVideoThumbnailListener() {
+//                    @Override
+//                    public void onThumbnailFinish() {
+//                        mContentHolder.notifyDataChange();
+//                    }
+//                });
             }
         });
     }
