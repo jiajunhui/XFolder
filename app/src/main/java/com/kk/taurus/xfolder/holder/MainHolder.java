@@ -14,6 +14,7 @@ import com.kk.taurus.filebase.entity.Storage;
 import com.kk.taurus.xfolder.R;
 import com.kk.taurus.xfolder.bean.MainHolderData;
 import com.kk.taurus.xfolder.bean.MediaEntity;
+import com.kk.taurus.xfolder.engine.AnimationEngine;
 import com.kk.taurus.xfolder.widget.StorageItem;
 
 import java.util.ArrayList;
@@ -80,6 +81,28 @@ public class MainHolder extends ContentHolder<MainHolderData> {
     @Override
     public void refreshView() {
         super.refreshView();
+
+        mImage.post(new Runnable() {
+            @Override
+            public void run() {
+                int width = mImage.getMeasuredWidth();
+                int height = mImage.getMeasuredHeight();
+//                mImage.startAnimation(AnimationEngine.getMediaTypeAnimation(width,height));
+//                mVideo.startAnimation(AnimationEngine.getMediaTypeAnimation(width,height));
+//                mMusic.startAnimation(AnimationEngine.getMediaTypeAnimation(width,height));
+//                mApk.startAnimation(AnimationEngine.getMediaTypeAnimation(width,height));
+//                mZip.startAnimation(AnimationEngine.getMediaTypeAnimation(width,height));
+//                mDoc.startAnimation(AnimationEngine.getMediaTypeAnimation(width,height));
+
+                AnimationEngine.animator(mImage,width/2,height/2);
+                AnimationEngine.animator(mVideo,width/2,height/2);
+                AnimationEngine.animator(mMusic,width/2,height/2);
+                AnimationEngine.animator(mApk,width/2,height/2);
+                AnimationEngine.animator(mZip,width/2,height/2);
+                AnimationEngine.animator(mDoc,width/2,height/2);
+            }
+        });
+
         MediaEntity entity = mData.getMediaEntity();
         if(entity!=null){
             if(entity.getPhotoResult()!=null && entity.getPhotoResult().getItems()!=null){

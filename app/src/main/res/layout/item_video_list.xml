@@ -18,10 +18,12 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <ImageView
+            <com.github.siyamed.shapeimageview.mask.PorterShapeImageView
                 android:id="@+id/iv_thumbnail"
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
+                app:siShape="@drawable/shape_video_list_item_cover"
+                app:siSquare="true"
                 android:scaleType="centerCrop"/>
             <LinearLayout
                 android:orientation="vertical"

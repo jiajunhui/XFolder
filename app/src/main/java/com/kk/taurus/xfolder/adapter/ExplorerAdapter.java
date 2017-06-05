@@ -8,11 +8,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kk.taurus.filebase.tools.BytesTool;
+import com.kk.taurus.imagedisplay.ImageDisplay;
+import com.kk.taurus.imagedisplay.entity.ThumbnailType;
 import com.kk.taurus.xfolder.R;
 import com.kk.taurus.xfolder.bean.BaseItem;
 import com.kk.taurus.xfolder.bean.FileItem;
 import com.kk.taurus.xfolder.bean.FolderItem;
-import com.kk.taurus.xfolder.engine.CacheEngine;
 import com.kk.taurus.xfolder.engine.ImageDisplayEngine;
 import com.kk.taurus.xfolder.utils.ExtensionUtils;
 
@@ -62,9 +63,12 @@ public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.ItemHo
         int resId = ExtensionUtils.getImageRes(item);
         if(resId == R.mipmap.icon_image){
             ImageDisplayEngine.display(mContext,holder.icon,item.getPath(),R.mipmap.icon_image);
+        }else if(resId == R.mipmap.icon_video){
+            ImageDisplay.disPlayThumbnail(mContext,holder.icon,item.getPath(),R.mipmap.icon_video, ThumbnailType.VIDEO_FULL_SCREEN_KIND);
+        }else if(resId == R.mipmap.icon_music){
+            ImageDisplay.disPlayThumbnail(mContext,holder.icon,item.getPath(),R.mipmap.icon_music, ThumbnailType.AUDIO);
         }else if(resId == R.mipmap.icon_apk){
-            String path = CacheEngine.getInstance().getApkIconPath(mContext,item.getPath());
-            ImageDisplayEngine.display(mContext,holder.icon,path,R.mipmap.icon_apk);
+            ImageDisplay.disPlayThumbnail(mContext,holder.icon,item.getPath(),R.mipmap.icon_apk, ThumbnailType.APK);
         }else{
             holder.icon.setImageResource(resId);
         }

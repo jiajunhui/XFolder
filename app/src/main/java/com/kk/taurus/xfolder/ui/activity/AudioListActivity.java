@@ -1,6 +1,5 @@
 package com.kk.taurus.xfolder.ui.activity;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import com.jiajunhui.xapp.medialoader.MediaLoader;
@@ -10,7 +9,6 @@ import com.kk.taurus.baseframe.bean.PageState;
 import com.kk.taurus.xfolder.bean.AudioListData;
 import com.kk.taurus.xfolder.bean.MAudioItem;
 import com.kk.taurus.xfolder.bean.ScanAudioData;
-import com.kk.taurus.xfolder.engine.CacheEngine;
 import com.kk.taurus.xfolder.holder.AudioListHolder;
 
 /**
@@ -18,8 +16,6 @@ import com.kk.taurus.xfolder.holder.AudioListHolder;
  */
 
 public class AudioListActivity extends BaseProjectActivity<AudioListData,AudioListHolder> implements AudioListHolder.OnAudioListListener {
-
-    private AsyncTask mTask;
 
     @Override
     public AudioListHolder getContentViewHolder(Bundle savedInstanceState) {
@@ -43,12 +39,6 @@ public class AudioListActivity extends BaseProjectActivity<AudioListData,AudioLi
                 data.setAudioItems(AudioListData.trans(result.getItems()));
                 setData(data);
                 setPageState(PageState.success());
-//                mTask = CacheEngine.getInstance().generatorAudioCover(data.getAudioItems(), new CacheEngine.OnAudioCoverListener() {
-//                    @Override
-//                    public void onCoverFinish() {
-//                        mContentHolder.notifyDataChange();
-//                    }
-//                });
             }
         });
     }
@@ -62,11 +52,4 @@ public class AudioListActivity extends BaseProjectActivity<AudioListData,AudioLi
         intentTo(ScanAudioActivity.class,bundle);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if(mTask!=null){
-            mTask.cancel(true);
-        }
-    }
 }

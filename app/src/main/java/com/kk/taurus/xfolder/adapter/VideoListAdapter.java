@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.siyamed.shapeimageview.mask.PorterShapeImageView;
 import com.jiajunhui.xapp.medialoader.bean.VideoItem;
 import com.kk.taurus.filebase.tools.BytesTool;
 import com.kk.taurus.imagedisplay.ImageDisplay;
@@ -48,7 +49,6 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.Vide
         MVideoItem item = videoItems.get(position);
         holder.name.setText(item.getDisplayName());
         holder.info.setText(getVideoInfo(item));
-//        ImageDisplayEngine.display(mContext,holder.icon,item.getThumbnail(),R.mipmap.icon_video);
         ImageDisplay.disPlayThumbnail(mContext,holder.icon,item.getPath(),R.mipmap.icon_video, ThumbnailType.VIDEO_MINI_KIND);
         if(mOnItemClickListener!=null){
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -75,13 +75,14 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.Vide
 
     public static class VideoItemHolder extends RecyclerView.ViewHolder{
 
-        ImageView icon;
+//        ImageView icon;
+        PorterShapeImageView icon;
         TextView name;
         TextView info;
 
         public VideoItemHolder(View itemView) {
             super(itemView);
-            icon = (ImageView) itemView.findViewById(R.id.iv_thumbnail);
+            icon = (PorterShapeImageView) itemView.findViewById(R.id.iv_thumbnail);
             name = (TextView) itemView.findViewById(R.id.tv_video_name);
             info = (TextView) itemView.findViewById(R.id.tv_video_info);
         }

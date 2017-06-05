@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.jiajunhui.xapp.medialoader.bean.PhotoItem;
-import com.kk.taurus.imagedisplay.ImageDisplay;
 import com.kk.taurus.xfolder.R;
 import com.kk.taurus.xfolder.callback.OnItemClickListener;
 import com.kk.taurus.xfolder.engine.ImageDisplayEngine;
@@ -48,8 +47,7 @@ public class PhotoListAdapter extends RecyclerView.Adapter<PhotoListAdapter.Phot
         layoutParams.width = mItemW;
         layoutParams.height = mItemW;
         holder.photo.setLayoutParams(layoutParams);
-//        ImageDisplayEngine.display(mContext,holder.photo,item.getPath(),R.mipmap.icon_image);
-        ImageDisplay.display(mContext,holder.photo,item.getPath(),R.mipmap.icon_image);
+        ImageDisplayEngine.display(mContext,holder.photo,item.getPath(),R.mipmap.icon_image);
         if(onItemClickListener!=null){
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

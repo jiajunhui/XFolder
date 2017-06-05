@@ -1,6 +1,5 @@
 package com.kk.taurus.xfolder.ui.activity;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import com.jiajunhui.xapp.medialoader.MediaLoader;
@@ -10,7 +9,6 @@ import com.kk.taurus.baseframe.bean.PageState;
 import com.kk.taurus.xfolder.bean.FileItem;
 import com.kk.taurus.xfolder.bean.MVideoItem;
 import com.kk.taurus.xfolder.bean.VideoListData;
-import com.kk.taurus.xfolder.engine.CacheEngine;
 import com.kk.taurus.xfolder.holder.VideoListHolder;
 
 import java.util.List;
@@ -20,8 +18,6 @@ import java.util.List;
  */
 
 public class VideoListActivity extends BaseProjectActivity<VideoListData,VideoListHolder> implements VideoListHolder.OnVideoListListener {
-
-    private AsyncTask mTask;
 
     @Override
     public VideoListHolder getContentViewHolder(Bundle savedInstanceState) {
@@ -46,12 +42,6 @@ public class VideoListActivity extends BaseProjectActivity<VideoListData,VideoLi
                 data.setVideoItems(videoItems);
                 setData(data);
                 setPageState(PageState.success());
-//                mTask = CacheEngine.getInstance().generatorThumbnail(videoItems, new CacheEngine.OnVideoThumbnailListener() {
-//                    @Override
-//                    public void onThumbnailFinish() {
-//                        mContentHolder.notifyDataChange();
-//                    }
-//                });
             }
         });
     }
@@ -67,11 +57,4 @@ public class VideoListActivity extends BaseProjectActivity<VideoListData,VideoLi
         intentTo(ScanVideoActivity.class,bundle);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if(mTask!=null){
-            mTask.cancel(true);
-        }
-    }
 }

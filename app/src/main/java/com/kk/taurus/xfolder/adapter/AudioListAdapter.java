@@ -14,7 +14,6 @@ import com.kk.taurus.playerbase.utils.TimeUtil;
 import com.kk.taurus.xfolder.R;
 import com.kk.taurus.xfolder.bean.MAudioItem;
 import com.kk.taurus.xfolder.callback.OnItemClickListener;
-import com.kk.taurus.xfolder.engine.ImageDisplayEngine;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +46,6 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.Audi
     @Override
     public void onBindViewHolder(final AudioItemHolder holder, final int position) {
         MAudioItem item = audioItems.get(position);
-//        ImageDisplayEngine.displayAsBitmap(mContext,holder.icon,item.getAudioCover(),R.mipmap.icon_audio_item_default);
         ImageDisplay.disPlayThumbnail(mContext,holder.icon,item.getPath(),R.mipmap.icon_audio_item_default, ThumbnailType.AUDIO);
         holder.name.setText(item.getDisplayName());
         holder.info.setText(getAudioInfo(item));
