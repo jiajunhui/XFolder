@@ -15,6 +15,10 @@ import com.kk.taurus.xfolder.callback.OnItemClickListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
+
 /**
  * Created by Taurus on 2017/5/19.
  */
@@ -45,9 +49,7 @@ public class VideoListHolder extends ContentHolder<VideoListData> implements OnI
     public void onHolderCreated(Bundle savedInstanceState) {
         super.onHolderCreated(savedInstanceState);
         mRecycler.setLayoutManager(new LinearLayoutManager(mContext,LinearLayoutManager.VERTICAL,false));
-        mAdapter = new VideoListAdapter(mContext,mItems);
-        mAdapter.setOnItemClickListener(this);
-        mRecycler.setAdapter(mAdapter);
+
     }
 
     @Override
@@ -55,14 +57,16 @@ public class VideoListHolder extends ContentHolder<VideoListData> implements OnI
         super.refreshView();
         mItems.clear();
         mItems.addAll(mData.getVideoItems());
+        if(mAdapter==null){
+            mAdapter = new VideoListAdapter(mContext,mItems);
+            SlideInBottomAnimationAdapter animationAdapter = new SlideInBottomAnimationAdapter(mAdapter);
+            animationAdapter.setDuration(500);
+            mAdapter.setOnItemClickListener(this);
+            mRecycler.setAdapter(animationAdapter);
+            return;
+        }
         mAdapter.notifyDataSetChanged();
 
-    }
-
-    public void notifyDataChange(){
-        if(mAdapter!=null){
-            mAdapter.notifyDataSetChanged();
-        }
     }
 
     @Override

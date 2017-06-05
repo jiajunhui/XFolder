@@ -1,6 +1,7 @@
 package com.kk.taurus.xfolder.holder;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -79,9 +80,8 @@ public class MainHolder extends ContentHolder<MainHolderData> {
     }
 
     @Override
-    public void refreshView() {
-        super.refreshView();
-
+    public void onHolderCreated(Bundle savedInstanceState) {
+        super.onHolderCreated(savedInstanceState);
         mImage.post(new Runnable() {
             @Override
             public void run() {
@@ -102,7 +102,11 @@ public class MainHolder extends ContentHolder<MainHolderData> {
                 AnimationEngine.animator(mDoc,width/2,height/2);
             }
         });
+    }
 
+    @Override
+    public void refreshView() {
+        super.refreshView();
         MediaEntity entity = mData.getMediaEntity();
         if(entity!=null){
             if(entity.getPhotoResult()!=null && entity.getPhotoResult().getItems()!=null){

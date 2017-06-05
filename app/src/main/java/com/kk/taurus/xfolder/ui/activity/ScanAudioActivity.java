@@ -1,5 +1,6 @@
 package com.kk.taurus.xfolder.ui.activity;
 
+import android.media.AudioManager;
 import android.os.Bundle;
 
 import com.kk.taurus.baseframe.bean.PageState;
@@ -24,6 +25,7 @@ public class ScanAudioActivity extends BaseProjectActivity<ScanAudioData,ScanAud
     @Override
     public void initData() {
         super.initData();
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
         getWindow().setNavigationBarColor(getResources().getColor(R.color.scan_audio_colorPrimary));
         setElevation(0f);
     }

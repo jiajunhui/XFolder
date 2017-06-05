@@ -16,7 +16,7 @@
             android:layout_height="60dp"
             android:padding="5dp"
             android:layout_centerVertical="true"
-            android:scaleType="centerInside"
+            android:scaleType="centerCrop"
             android:src="@mipmap/icon_folder"/>
         <RelativeLayout
             android:layout_width="wrap_content"

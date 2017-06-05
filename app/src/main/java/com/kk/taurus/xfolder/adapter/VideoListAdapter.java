@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.siyamed.shapeimageview.mask.PorterShapeImageView;
@@ -16,7 +15,6 @@ import com.kk.taurus.playerbase.utils.TimeUtil;
 import com.kk.taurus.xfolder.R;
 import com.kk.taurus.xfolder.bean.MVideoItem;
 import com.kk.taurus.xfolder.callback.OnItemClickListener;
-import com.kk.taurus.xfolder.engine.ImageDisplayEngine;
 
 import java.util.List;
 

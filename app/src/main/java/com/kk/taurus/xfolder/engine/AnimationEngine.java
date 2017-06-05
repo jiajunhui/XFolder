@@ -44,11 +44,12 @@ public class AnimationEngine {
         while(!animatorSets.isEmpty()){
             AnimatorSet animatorSet = animatorSets.poll();
             animatorSet.start();
-            
+
         }
     }
 
     public static void animator(View view, float pivotX, float pivotY){
+        view.clearAnimation();
 
         view.setPivotX(pivotX);
         view.setPivotY(pivotY);
@@ -56,12 +57,12 @@ public class AnimationEngine {
         AnimatorSet animatorSet = new AnimatorSet();
 
         animatorSet.playTogether(
-                ObjectAnimator.ofFloat(view,"alpha",0.1f,1.0f).setDuration(400),
-                ObjectAnimator.ofFloat(view,"scaleX",0.2f,1.1f,0.8f,1.0f,0.9f,1.0f).setDuration(1000),
-                ObjectAnimator.ofFloat(view,"scaleY",0.2f,1.1f,0.8f,1.0f,0.9f,1.0f).setDuration(1000)
+//                ObjectAnimator.ofFloat(view,"alpha",0.1f,1.0f).setDuration(400),
+                ObjectAnimator.ofFloat(view,"scaleX",0.0f,1.1f,0.7f,1.0f,0.8f,1.0f,0.9f,1.0f).setDuration(1200),
+                ObjectAnimator.ofFloat(view,"scaleY",0.0f,1.1f,0.7f,1.0f,0.8f,1.0f,0.9f,1.0f).setDuration(1200)
         );
 
-        animatorSet.setInterpolator(new AccelerateInterpolator(2.5f));
+        animatorSet.setInterpolator(new AccelerateInterpolator(1.5f));
 
         animatorSet.start();
 

@@ -1,8 +1,9 @@
 package com.kk.taurus.xfolder.holder;
 
 import android.content.Context;
-import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.media.audiofx.Visualizer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
@@ -15,13 +16,12 @@ import com.jiajunhui.xapp.medialoader.bean.AudioItem;
 import com.jiajunhui.xapp.medialoader.bean.AudioResult;
 import com.jiajunhui.xapp.medialoader.callback.OnAudioLoaderCallBack;
 import com.kk.taurus.baseframe.base.ContentHolder;
-import com.kk.taurus.playerbase.player.AndroidMediaPlayer;
-import com.kk.taurus.playerbase.player.IMediaPlayer;
+import com.kk.taurus.imagedisplay.ImageDisplay;
+import com.kk.taurus.imagedisplay.entity.ThumbnailType;
 import com.kk.taurus.playerbase.setting.VideoData;
 import com.kk.taurus.xfolder.R;
 import com.kk.taurus.xfolder.bean.MAudioItem;
 import com.kk.taurus.xfolder.bean.ScanAudioData;
-import com.kk.taurus.xfolder.engine.CacheEngine;
 import com.kk.taurus.xfolder.engine.ImageDisplayEngine;
 
 import java.util.List;
@@ -37,7 +37,7 @@ public class ScanAudioHolder extends ContentHolder<ScanAudioData> {
     private MusicWave mMusicWave;
     private ImageView mCover;
     private ImageView mStateView;
-    private AndroidMediaPlayer mPlayer;
+    private MediaPlayer mPlayer;
 
     private Visualizer mVisualizer;
 
@@ -79,24 +79,7 @@ public class ScanAudioHolder extends ContentHolder<ScanAudioData> {
     @Override
     public void onHolderCreated(Bundle savedInstanceState) {
         super.onHolderCreated(savedInstanceState);
-        mPlayer = new AndroidMediaPlayer();
-        mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-//        mPlayer.setAudioStreamType(AudioManager.AUDIO_SESSION_ID_GENERATE);
-        updateVisualizer();
-        mPlayer.setOnPreparedListener(new IMediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(IMediaPlayer mp) {
-                mPlayer.start();
-            }
-        });
 
-        mPlayer.setOnInfoListener(new IMediaPlayer.OnInfoListener() {
-            @Override
-            public boolean onInfo(IMediaPlayer mp, int what, int extra) {
-
-                return false;
-            }
-        });
     }
 
     @Override
@@ -107,8 +90,9 @@ public class ScanAudioHolder extends ContentHolder<ScanAudioData> {
         data.setName(item.getDisplayName());
         loadAudioCover(item);
         try {
-            mPlayer.setDataSource(data.getData());
-            mPlayer.prepareAsync();
+            mPlayer = MediaPlayer.create(mContext, Uri.parse(data.getData()));
+            updateVisualizer();
+            mPlayer.start();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -137,8 +121,8 @@ public class ScanAudioHolder extends ContentHolder<ScanAudioData> {
                     List<AudioItem> items = result.getItems();
                     if(items.size()>0){
                         AudioItem audioItem = items.get(0);
-                        String cache = CacheEngine.getInstance().getAudioCover(audioItem.getPath());
-                        ImageDisplayEngine.display(mContext,mCover,cache,R.mipmap.icon_scan_audio);
+                        ImageDisplay.disPlayThumbnail(mContext,mCover,
+                                audioItem.getPath(),R.mipmap.icon_scan_audio, ThumbnailType.AUDIO);
                     }
                 }
             });
@@ -157,10 +141,7 @@ public class ScanAudioHolder extends ContentHolder<ScanAudioData> {
                                                       byte[] bytes, int samplingRate) {
                         mMusicWave.updateVisualizer(bytes);
                     }
-
-                    public void onFftDataCapture(Visualizer visualizer,
-                                                 byte[] bytes, int samplingRate) {
-                    }
+                    public void onFftDataCapture(Visualizer visualizer,byte[] bytes, int samplingRate) {}
                 }, Visualizer.getMaxCaptureRate() / 2, true, false);
         mVisualizer.setEnabled(true);
     }

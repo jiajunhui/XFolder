@@ -40,8 +40,8 @@ public class VideoListActivity extends BaseProjectActivity<VideoListData,VideoLi
                 VideoListData data = new VideoListData();
                 List<MVideoItem> videoItems = VideoListData.trans(result.getItems());
                 data.setVideoItems(videoItems);
-                setData(data);
                 setPageState(PageState.success());
+                setData(data);
             }
         });
     }

@@ -2,7 +2,6 @@ package com.kk.taurus.xfolder.bean;
 
 import com.jiajunhui.xapp.medialoader.bean.AudioItem;
 import com.kk.taurus.baseframe.base.HolderData;
-import com.kk.taurus.xfolder.engine.CacheEngine;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -34,8 +33,6 @@ public class AudioListData implements HolderData,Serializable {
                 audioItem.setDuration(item.getDuration());
                 audioItem.setPath(item.getPath());
                 audioItem.setSize(item.getSize());
-                String cachePath = CacheEngine.getInstance().getAudioCoverCachePath(item.getPath());
-                audioItem.setAudioCover(cachePath);
                 audioItems.add(audioItem);
             }
         }
