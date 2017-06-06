@@ -17,6 +17,7 @@ import com.kk.taurus.xfolder.bean.BaseItem;
 import com.kk.taurus.xfolder.bean.FolderItem;
 import com.kk.taurus.xfolder.bean.StackEntity;
 import com.kk.taurus.xfolder.bean.StateRecord;
+import com.kk.taurus.xfolder.engine.AnimationEngine;
 import com.kk.taurus.xfolder.engine.FileEditEngine;
 
 import java.util.ArrayList;
@@ -62,6 +63,7 @@ public class ExplorerHolder extends ContentHolder<StackEntity> implements Explor
     public void onHolderCreated(Bundle savedInstanceState) {
         super.onHolderCreated(savedInstanceState);
         mRecycler.setLayoutManager(new LinearLayoutManager(mContext,LinearLayoutManager.VERTICAL,false));
+        mRecycler.setAnimation(AnimationEngine.getExplorerItemAnimationSet());
         mRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {

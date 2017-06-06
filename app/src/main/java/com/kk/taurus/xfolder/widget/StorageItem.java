@@ -2,6 +2,7 @@ package com.kk.taurus.xfolder.widget;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.kk.taurus.filebase.entity.Storage;
@@ -28,6 +29,9 @@ public class StorageItem {
         sb.append("总空间: ").append(BytesTool.formatBytes(storage.getTotalSize())).append("  ")
                 .append("可用空间: ").append(BytesTool.formatBytes(storage.getAvailableSize()));
         info.setText(sb.toString());
+//        ProgressBar progressBar = (ProgressBar) mItemView.findViewById(R.id.progressBar);
+//        progressBar.setMax((int) storage.getTotalSize());
+//        progressBar.setProgress((int) storage.getAvailableSize());
         mItemView.findViewById(R.id.card_view).setOnClickListener(onClickListener);
         return mItemView;
     }

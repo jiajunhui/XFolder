@@ -87,19 +87,12 @@ public class MainHolder extends ContentHolder<MainHolderData> {
             public void run() {
                 int width = mImage.getMeasuredWidth();
                 int height = mImage.getMeasuredHeight();
-//                mImage.startAnimation(AnimationEngine.getMediaTypeAnimation(width,height));
-//                mVideo.startAnimation(AnimationEngine.getMediaTypeAnimation(width,height));
-//                mMusic.startAnimation(AnimationEngine.getMediaTypeAnimation(width,height));
-//                mApk.startAnimation(AnimationEngine.getMediaTypeAnimation(width,height));
-//                mZip.startAnimation(AnimationEngine.getMediaTypeAnimation(width,height));
-//                mDoc.startAnimation(AnimationEngine.getMediaTypeAnimation(width,height));
-
-                AnimationEngine.animator(mImage,width/2,height/2);
-                AnimationEngine.animator(mVideo,width/2,height/2);
-                AnimationEngine.animator(mMusic,width/2,height/2);
-                AnimationEngine.animator(mApk,width/2,height/2);
-                AnimationEngine.animator(mZip,width/2,height/2);
-                AnimationEngine.animator(mDoc,width/2,height/2);
+                AnimationEngine.mainMediaAnimator(mImage,width/2,height/2);
+                AnimationEngine.mainMediaAnimator(mVideo,width/2,height/2);
+                AnimationEngine.mainMediaAnimator(mMusic,width/2,height/2);
+                AnimationEngine.mainMediaAnimator(mApk,width/2,height/2);
+                AnimationEngine.mainMediaAnimator(mZip,width/2,height/2);
+                AnimationEngine.mainMediaAnimator(mDoc,width/2,height/2);
             }
         });
     }
