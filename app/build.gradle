@@ -41,4 +41,5 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.android.support:design:25.3.0'
     compile 'jp.wasabeef:recyclerview-animators:2.2.6'
+    compile 'org.nanohttpd:nanohttpd:2.3.1'
 }
