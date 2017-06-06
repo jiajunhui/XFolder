@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">XFolder</string>
 
+    <string name="open">open</string>
+    <string name="close">close</string>
+
     <string name="permission_fail_tips">未授予存储权限，应用将无法正常工作。</string>
     <string name="photo_folder_page_title">相册</string>
     <string name="photo_list_default_page_title">所有图片</string>

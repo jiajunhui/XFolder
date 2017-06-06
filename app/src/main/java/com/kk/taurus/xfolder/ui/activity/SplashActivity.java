@@ -59,7 +59,7 @@ public class SplashActivity extends ToolsActivity {
     @PermissionSuccess(requestCode = PERMISSION_STORAGE_REQUEST_CODE)
     public void onPermissionSuccess(){
         SearchEngine.getInstance().initSearchEngine();
-        Intent intent = new Intent(this,MainActivity.class);
+        Intent intent = new Intent(this,HomeActivity.class);
         startActivity(intent);
         onFinish();
     }
