@@ -4,6 +4,14 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="gray1">#444444</color>
+    <color name="gray2">#777777</color>
+    <color name="gray3">#AAAAAA</color>
+    <color name="gray4">#CCCCCC</color>
+    <color name="gray5">#EEEEEE</color>
+
     <color name="scan_video_colorPrimary">#352e2e</color>
     <color name="scan_video_colorPrimaryDark">#352e2e</color>
 
@@ -27,6 +35,13 @@
     <color name="media_type_text_color">#444444</color>
     <color name="media_type_number_color">#666666</color>
 
+    <color name="nav_menu_item_text_color">#444444</color>
+    <color name="nav_menu_item_text_color_checked">#3F51B5</color>
+
     <drawable name="photo_tab_selected">@color/photo_tab_select_color</drawable>
     <drawable name="photo_tab_normal">@color/photo_tab_normal</drawable>
+
+    <drawable name="nav_item_normal">@color/white</drawable>
+    <drawable name="nav_item_checked">@color/gray5</drawable>
+
 </resources>

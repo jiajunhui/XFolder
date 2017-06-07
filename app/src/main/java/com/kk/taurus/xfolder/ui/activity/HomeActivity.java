@@ -2,11 +2,10 @@ package com.kk.taurus.xfolder.ui.activity;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.Menu;
@@ -38,15 +37,11 @@ import java.util.List;
  * Created by Taurus on 2017/6/6.
  */
 
-public class HomeActivity extends AppCompatActivity implements IHomeView, View.OnClickListener{
+public class HomeActivity extends ToolsActivity implements IHomeView, View.OnClickListener{
 
     private Toolbar mToolBar;
     private DrawerLayout mDrawerLayout;
-//    private View mNavigationView;
     private NavigationView mNavigationView;
-
-    private TextView mNavRemoteManage;
-    private TextView mNavAppManage;
 
     private View mImage;
     private View mVideo;
@@ -66,31 +61,17 @@ public class HomeActivity extends AppCompatActivity implements IHomeView, View.O
 
     private HomePresenter mHomePresenter;
 
-//    @Override
-//    public View getContentView(Bundle savedInstanceState) {
-//        return View.inflate(this,R.layout.activity_home,null);
-//    }
-
-
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-        afterSetContentView();
-        initData();
+    public View getContentView(Bundle savedInstanceState) {
+        return View.inflate(this,R.layout.activity_home,null);
     }
 
     protected void afterSetContentView() {
         mToolBar = getViewById(R.id.id_toolbar);
         mDrawerLayout = getViewById(R.id.id_drawer_layout);
-//        mNavigationView = getViewById(R.id.drawer_navigation);
         mNavigationView = getViewById(R.id.id_navigationView);
 
-//        mNavRemoteManage = getViewById(R.id.tv_remote_manage);
-//        mNavAppManage = getViewById(R.id.tv_app_manage);
-
-//        mNavRemoteManage.setOnClickListener(this);
-//        mNavAppManage.setOnClickListener(this);
+        mNavigationView.setItemIconTintList(null);
 
         mImage = getViewById(R.id.ll_image);
         mVideo = getViewById(R.id.ll_video);
@@ -144,9 +125,12 @@ public class HomeActivity extends AppCompatActivity implements IHomeView, View.O
         mDrawerLayout.setDrawerListener(mActionBarDrawerToggle);
 
         mNavigationView.inflateHeaderView(R.layout.layout_home_nav_header);
+
         mNavigationView.inflateMenu(R.menu.menu_home_nav);
 
         initDrawerLayout();
+
+        setNavigationListener();
     }
 
     private void initDrawerLayout() {
@@ -156,24 +140,44 @@ public class HomeActivity extends AppCompatActivity implements IHomeView, View.O
         mNavigationView.setLayoutParams(layoutParams);
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_main,menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()){
-//            case R.id.main_search:
-////                intentTo(SearchActivity.class);
-//                break;
-//            case R.id.setting:
-////                intentTo(SettingActivity.class);
-//                break;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
+    private void setNavigationListener(){
+        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.remote_manager:
+
+                        break;
+
+                    case R.id.app_manager:
+
+                        break;
+                }
+                item.setChecked(true);
+                mDrawerLayout.closeDrawers();
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.main_search:
+                intentTo(SearchActivity.class);
+                break;
+            case R.id.setting:
+                intentTo(SettingActivity.class);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public void onBackPressed() {
@@ -248,7 +252,7 @@ public class HomeActivity extends AppCompatActivity implements IHomeView, View.O
                 public void onClick(View view) {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable(ExplorerActivity.KEY_STORAGE_DATA,storage);
-//                    intentTo(ExplorerActivity.class,bundle);
+                    intentTo(ExplorerActivity.class,bundle);
                 }
             }),params);
         }
@@ -258,20 +262,14 @@ public class HomeActivity extends AppCompatActivity implements IHomeView, View.O
     public void onClick(View v) {
         FileListData data = new FileListData();
         switch (v.getId()){
-//            case R.id.tv_remote_manage:
-//                mDrawerLayout.closeDrawers();
-//                break;
-//            case R.id.tv_app_manage:
-//                mDrawerLayout.closeDrawers();
-//                break;
             case R.id.ll_image:
-//                intentTo(PhotoListActivity.class);
+                intentTo(PhotoListActivity.class);
                 break;
             case R.id.ll_video:
-//                intentTo(VideoListActivity.class);
+                intentTo(VideoListActivity.class);
                 break;
             case R.id.ll_music:
-//                intentTo(AudioListActivity.class);
+                intentTo(AudioListActivity.class);
                 break;
             case R.id.ll_apk:
                 data.setTitle("安装包");
@@ -292,7 +290,7 @@ public class HomeActivity extends AppCompatActivity implements IHomeView, View.O
             case R.id.ll_doc:
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(FileListActivity.KEY_FILE_LIST_DATA,data);
-//                intentTo(FileListActivity.class,bundle);
+                intentTo(FileListActivity.class,bundle);
                 break;
         }
     }
