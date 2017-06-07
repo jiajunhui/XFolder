@@ -3,7 +3,6 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="BaseFrameTheme.ActivityAnimation">
         <!-- Customize your theme here. -->
-        <item name="android:layout_height">48dp</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -48,7 +47,7 @@
 
 
     <!-- Base application theme. -->
-    <style name="AppThemeHome" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppThemeHome" parent="AppTheme">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">#3F51B5</item>
         <item name="colorPrimaryDark">#303F9F</item>

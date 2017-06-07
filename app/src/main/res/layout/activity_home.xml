@@ -15,6 +15,50 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <!--<LinearLayout-->
+        <!--android:id="@+id/drawer_navigation"-->
+        <!--android:orientation="vertical"-->
+        <!--android:layout_gravity="left"-->
+        <!--android:fitsSystemWindows="true"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+        <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="200dp"-->
+            <!--android:background="@mipmap/nav_top"/>-->
+        <!--<LinearLayout-->
+            <!--android:orientation="vertical"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="#DDDDDD">-->
+            <!--<TextView-->
+                <!--android:id="@+id/tv_remote_manage"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="50dp"-->
+                <!--android:drawableLeft="@mipmap/icon_remote"-->
+                <!--android:drawableRight="@mipmap/icon_arrow"-->
+                <!--android:drawablePadding="10dp"-->
+                <!--android:padding="10dp"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:textSize="16sp"-->
+                <!--android:textColor="@color/selector_nav_menu_textcolor"-->
+                <!--android:text="远程管理"/>-->
+            <!--<TextView-->
+                <!--android:id="@+id/tv_app_manage"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="50dp"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:drawableLeft="@mipmap/icon_app"-->
+                <!--android:drawableRight="@mipmap/icon_arrow"-->
+                <!--android:drawablePadding="10dp"-->
+                <!--android:padding="10dp"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:textSize="16sp"-->
+                <!--android:textColor="@color/selector_nav_menu_textcolor"-->
+                <!--android:text="应用管理"/>-->
+        <!--</LinearLayout>-->
+    <!--</LinearLayout>-->
+
     <android.support.design.widget.NavigationView
         android:id="@+id/id_navigationView"
         android:layout_width="wrap_content"
