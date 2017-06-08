@@ -60,6 +60,7 @@ public class HomeActivity extends ToolsActivity implements IHomeView, View.OnCli
     private LinearLayout mStorageContainer;
 
     private HomePresenter mHomePresenter;
+    private BaseServer mServer;
 
     @Override
     public View getContentView(Bundle savedInstanceState) {
@@ -103,10 +104,14 @@ public class HomeActivity extends ToolsActivity implements IHomeView, View.OnCli
 
     public void initData() {
 
-        BaseServer server = new BaseServer(8080);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.colorPrimary));
+        }
+
+        mServer = new BaseServer(8080);
 
         try {
-            server.start();
+            mServer.start();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -292,6 +297,14 @@ public class HomeActivity extends ToolsActivity implements IHomeView, View.OnCli
                 bundle.putSerializable(FileListActivity.KEY_FILE_LIST_DATA,data);
                 intentTo(FileListActivity.class,bundle);
                 break;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(mServer!=null){
+            mServer.stop();
         }
     }
 }

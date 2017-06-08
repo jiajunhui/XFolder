@@ -18,11 +18,12 @@ public class BaseServer extends NanoHTTPD {
 
     @Override
     public Response serve(IHTTPSession session) {
-        StringBuilder builder = new StringBuilder();
-        builder.append("<!DOCTYPE html><html><body>");
-        builder.append("hello,guys");
-        builder.append("</body></html>\n");
-        return newFixedLengthResponse(builder.toString());
+//        StringBuilder builder = new StringBuilder();
+//        builder.append("<!DOCTYPE html><html><body>");
+//        builder.append("hello,guys");
+//        builder.append("</body></html>\n");
+//        return newFixedLengthResponse(builder.toString());
+        return ServerEngine.handleRequest(session);
     }
 
 }

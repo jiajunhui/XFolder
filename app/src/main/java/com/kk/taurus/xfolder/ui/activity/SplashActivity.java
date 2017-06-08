@@ -3,6 +3,7 @@ package com.kk.taurus.xfolder.ui.activity;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -88,6 +89,9 @@ public class SplashActivity extends ToolsActivity {
     @Override
     public void initData() {
         super.initData();
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.colorPrimary));
+        }
         mHandler.sendEmptyMessageDelayed(MSG_CODE_REQUEST_PERMISSION,DELAY_TIME_MS_REQUEST_PERMISSION);
     }
 
