@@ -5,6 +5,7 @@ import android.os.Environment;
 import com.bumptech.glide.request.target.ViewTarget;
 import com.kk.taurus.baseframe.FrameApplication;
 import com.kk.taurus.xfolder.server.ServerEngine;
+import com.kk.taurus.xfolder.server.response.FavIconResponse;
 import com.kk.taurus.xfolder.server.response.VideoResourceResponse;
 import com.xapp.jjh.logtools.config.XLogConfig;
 import com.xapp.jjh.logtools.tools.XLog;
@@ -20,5 +21,6 @@ public class XFolderApplication extends FrameApplication {
         XLog.init(getApplicationContext(),new XLogConfig().setLogDir(Environment.getExternalStorageDirectory()));
         ViewTarget.setTagId(R.id.glide_tag);
         ServerEngine.addResponseType(new VideoResourceResponse());
+        ServerEngine.addResponseType(new FavIconResponse());
     }
 }

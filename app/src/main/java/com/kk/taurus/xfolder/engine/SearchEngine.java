@@ -118,7 +118,7 @@ public class SearchEngine {
                         }
                         @Override
                         public void onItemAdd(File file, int counter) {
-                            Log.d(TAG,"directory : " + file.getAbsolutePath());
+//                            Log.d(TAG,"directory : " + file.getAbsolutePath());
                             String recordText = file.getAbsolutePath();
                             if(!TextUtils.isEmpty(recordText)){
                                 recordSearchIndex(mDirectoryDao.getTemp(),SEARCH_DIRECTORY_INDEX_FILE_NAME,recordText);
@@ -179,7 +179,7 @@ public class SearchEngine {
                         }
                         @Override
                         public void onItemAdd(File file, int counter) {
-                            Log.d(TAG,"file : " + file.getAbsolutePath());
+//                            Log.d(TAG,"file : " + file.getAbsolutePath());
                             String recordText = file.getAbsolutePath();
                             if(!TextUtils.isEmpty(recordText)){
                                 recordSearchIndex(mDirectoryDao.getTemp(),SEARCH_FILES_INDEX_FILE_NAME,recordText);

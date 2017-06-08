@@ -11,6 +11,11 @@ import fi.iki.elonen.NanoHTTPD;
 
 public abstract class BaseResourceResponse implements IResourceResponse {
 
+    @Override
+    public boolean onDispatchRequest(NanoHTTPD.IHTTPSession session) {
+        return shouldHandle(session);
+    }
+
     protected String getResourcePath(NanoHTTPD.IHTTPSession session){
         Map<String,List<String>> params = session.getParameters();
         if(params!=null){
@@ -20,6 +25,10 @@ public abstract class BaseResourceResponse implements IResourceResponse {
             }
         }
         return null;
+    }
+
+    protected boolean shouldHandle(NanoHTTPD.IHTTPSession session){
+        return getUri(session).equalsIgnoreCase(getContentUri());
     }
 
     protected String getUri(NanoHTTPD.IHTTPSession session){
