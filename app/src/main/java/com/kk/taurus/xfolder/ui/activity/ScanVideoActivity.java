@@ -25,7 +25,7 @@ public class ScanVideoActivity extends BaseProjectActivity<ScanVideoData,ScanVid
     @Override
     public void initData() {
         super.initData();
-        getWindow().setNavigationBarColor(getResources().getColor(R.color.scan_video_colorPrimary));
+        setNavigationBarColor(getResources().getColor(R.color.scan_video_colorPrimary));
         mContentHolder.setOnScanVideoListener(this);
     }
 

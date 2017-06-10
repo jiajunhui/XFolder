@@ -16,8 +16,12 @@ public abstract class BaseProjectActivity<T extends HolderData,H extends Content
     @Override
     public void initData() {
         super.initData();
+        setNavigationBarColor(getResources().getColor(R.color.colorPrimary));
+    }
+
+    protected void setNavigationBarColor(int color){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-            getWindow().setNavigationBarColor(getResources().getColor(R.color.colorPrimary));
+            getWindow().setNavigationBarColor(color);
         }
     }
 }

@@ -26,7 +26,7 @@ public class ScanAudioActivity extends BaseProjectActivity<ScanAudioData,ScanAud
     public void initData() {
         super.initData();
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
-        getWindow().setNavigationBarColor(getResources().getColor(R.color.scan_audio_colorPrimary));
+        setNavigationBarColor(getResources().getColor(R.color.scan_audio_colorPrimary));
         setElevation(0f);
     }
 

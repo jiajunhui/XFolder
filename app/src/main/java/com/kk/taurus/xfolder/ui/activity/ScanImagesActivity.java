@@ -1,6 +1,7 @@
 package com.kk.taurus.xfolder.ui.activity;
 
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -74,9 +75,7 @@ public class ScanImagesActivity extends ToolBarActivity<ScanImageData,ScanImageH
                             public void onGenerated(Palette palette) {
                                 Palette.Swatch swatch = palette.getVibrantSwatch();
                                 if(swatch!=null){
-                                    setStatusBarColor(swatch.getRgb());
-                                    getToolBar().setBackgroundColor(swatch.getRgb());
-                                    mContentHolder.setBackgroundColor(swatch.getRgb());
+                                    changeColor(swatch.getRgb());
                                 }
                             }
                         });
@@ -84,5 +83,14 @@ public class ScanImagesActivity extends ToolBarActivity<ScanImageData,ScanImageH
                 });
             }
         }, 100);
+    }
+
+    private void changeColor(int color){
+        setStatusBarColor(color);
+        getToolBar().setBackgroundColor(color);
+        mContentHolder.setBackgroundColor(color);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            getWindow().setNavigationBarColor(color);
+        }
     }
 }
